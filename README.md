@@ -5,7 +5,7 @@
 Lorem ipsum dolor.
 ## 📃 Development Log
 ### Dec 14, 2021 (Tuesday)
-- **Katherine** 🧊 
+- **Katherine** 🧊  
 Created the repo and edited the google form.    
-- **Rickey** 🌪️
+- **Rickey** 🌪️  
 Edited the README.md.
