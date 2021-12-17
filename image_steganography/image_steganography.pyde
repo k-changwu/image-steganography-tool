@@ -50,3 +50,37 @@ def LSB_mode():
             # print(blue(pixels[0])) # SHOULD BE 0 ish
             binary_string = "".join(binary_string.split())
             print(binary_string)
+            i = 0
+            newImage_iter = 0
+            newImage = createImage(img.width, img.height, RGB)
+            newImage.loadPixels()
+            for y in range(0, img.height):
+                for x in range(0, img.width):
+                    colour = get(x,y)
+                    redC = red(colour)
+                    greenC = green(colour)
+                    blueC = blue(colour)
+                    redCInBinary = bin(int(redC))
+                    greenCInBinary = bin(int(greenC))
+                    blueCInBinary = bin(int(blueC))
+                    redCInBinary = str(redCInBinary)[2:]
+                    blueCInBinary = str(blueCInBinary)[2:]
+                    greenCInBinary = str(greenCInBinary)[2:]
+                    for n in range(0,3):
+                        if i < len(binary_string):
+                            if n == 0:
+                                redCInBinary = int(redCInBinary) & ~1 | int(binary_string[i])
+                                i += 1
+                            if n == 1:
+                                greenCInBinary = int(greenCInBinary) & ~1 | int(binary_string[i])
+                                i += 1
+                            if n == 2:
+                                blueCInBinary = int(blueCInBinary) & ~1 | int(binary_string[i])
+                                i += 1
+                    newImage.pixels[newImage_iter] = color(int(redCInBinary), int(greenCInBinary), int(blueCInBinary))
+                    newImage_iter += 1
+            newImage.updatePixels()
+            image(newImage, 0, 0)
+            print("DONE WITH EMBEDDING")
+                        
+                        
