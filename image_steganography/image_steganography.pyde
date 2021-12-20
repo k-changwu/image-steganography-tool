@@ -10,6 +10,15 @@ def draw():
     #color_cycling_mode()
     LSB_mode()
 
+def start():
+    global booster 
+    if keyPressed == True:
+        selected_image_file = booster.showFileSelection()
+        if selected_image_file != None:
+            pathToImage = selected_image_file.getAbsolutePath()
+            img = loadImage(pathToImage)
+            image(img, 0, 0)
+            
 def color_cycling_mode():
     global booster
     if keyPressed == True:
@@ -40,6 +49,8 @@ def LSB_mode():
             #selection = UiBooster().showConfirmDialog("Would you like to embed a message?", "Are you sure?", () -> print("Action accepted"), () -> print("Action declined"))
             #if selection == "Yes":  
             message = UiBooster().showTextInputDialog("What message do you want to hide?") 
+            dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
+            dialog.setMessage("Ready");
             message_bytes = message.encode("ascii")
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode("ascii")
@@ -79,7 +90,9 @@ def LSB_mode():
                                 i += 1
                     newImage.pixels[newImage_iter] = color(int(redCInBinary), int(greenCInBinary), int(blueCInBinary))
                     newImage_iter += 1
+            
             newImage.updatePixels()
+            dialog.close();
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
                         
