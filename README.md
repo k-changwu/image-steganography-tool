@@ -1,6 +1,6 @@
 # image-steganography-tool
-**Team: The Stepanographers**  
-**Members: Katherine Chang and Rickey Dong**  
+**Team:** The Stepanographers  
+**Members:** Katherine Chang and Rickey Dong  
 **Brief Project Description:**  
 Lorem ipsum dolor.  
 ## 📃 Development Log
@@ -17,4 +17,6 @@ Decided on using the UiBooster library as of now to quickly get things up and ru
 ### Dec 16, 2021 (Thursday)
 - **Katherine** 🧊 &  **Rickey** 🌪️  
 Finished research on potential additonal features of the tool. Discussed and brainstormed and wrote pseudocode for potential mechanisms for implementing color cycling in class. Bounced ideas off of each other for future processing GUI features. Worked on implementing LSB embedding mode where user is prompted to input desired message over Zoom call at home. 
-
+### Dec 17, 2021 (Friday)
+- **Katherine** 🧊 &  **Rickey** 🌪️  
+Worked on debugging the LSB insertion algorithm and learned about the bitwise operator &.
