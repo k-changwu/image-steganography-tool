@@ -20,3 +20,6 @@ Finished research on potential additonal features of the tool. Discussed and bra
 ### Dec 17, 2021 (Friday)
 - **Katherine** 🧊 &  **Rickey** 🌪️  
 Worked on debugging the LSB insertion algorithm and learned about the bitwise operator &.
+### Dec 20, 2021 (Monday)
+- **Rickey** 🌪️  
+Located and resolved a bug where the binary numbers when doing bitwise operations on them had only seven digits to work with instead of eight.
