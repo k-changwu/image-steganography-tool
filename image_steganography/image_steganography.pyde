@@ -46,21 +46,21 @@ def LSB_mode():
             img = loadImage(pathToImage)
             image(img, 0, 0)
             loadPixels()
-            #selection = UiBooster().showConfirmDialog("Would you like to embed a message?", "Are you sure?", () -> print("Action accepted"), () -> print("Action declined"))
-            #if selection == "Yes":  
+            # #selection = UiBooster().showConfirmDialog("Would you like to embed a message?", "Are you sure?", () -> print("Action accepted"), () -> print("Action declined"))
+            # #if selection == "Yes":  
             message = UiBooster().showTextInputDialog("What message do you want to hide?") 
-            dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
-            dialog.setMessage("Ready");
+            # dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
+            # dialog.setMessage("Ready");
             message_bytes = message.encode("ascii")
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode("ascii")
             binary_string = ' '.join(format(ord(x), 'b') for x in message)
-            # print(binary_string)
-            # print(red(pixels[0])) # SHOULD BE 255 ish
-            # print(green(pixels[0])) # SHOULD BE 0 ish
-            # print(blue(pixels[0])) # SHOULD BE 0 ish
+            print(binary_string + " is what we tryna embed")
+            print(red(pixels[0])) # SHOULD BE 255 ish
+            print(green(pixels[0])) # SHOULD BE 0 ish
+            print(blue(pixels[0])) # SHOULD BE 0 ish
             binary_string = "".join(binary_string.split())
-            print(binary_string)
+            # print(binary_string)
             i = 0
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
@@ -80,19 +80,54 @@ def LSB_mode():
                     for n in range(0,3):
                         if i < len(binary_string):
                             if n == 0:
-                                redCInBinary = int(redCInBinary) & ~1 | int(binary_string[i])
-                                i += 1
+                                if i % 8 == 0:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(redCInBinary, " is the red value premodification")
+                                    redCInBinary = int(redCInBinary) & ~1 | 0
+                                    i += 1
+                                    print(redCInBinary, " is the red value after modification")
+                                else:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(redCInBinary, " is the red value premodification")
+                                    redCInBinary = int(redCInBinary) & ~1 | int(binary_string[i])
+                                    i += 1
+                                    print(redCInBinary, " is the red value after modification")
                             if n == 1:
-                                greenCInBinary = int(greenCInBinary) & ~1 | int(binary_string[i])
-                                i += 1
+                                if i % 8 == 0:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(greenCInBinary, " is the green value premodification")
+                                    greenCInBinary = int(greenCInBinary) & ~1 | 0
+                                    i += 1
+                                    print(greenCInBinary, " is the green value after modification")
+                                else:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(greenCInBinary, " is the green value premodification")
+                                    greenCInBinary = int(greenCInBinary) & ~1 | int(binary_string[i])
+                                    i += 1
+                                    print(greenCInBinary, " is the green value after modification")
                             if n == 2:
-                                blueCInBinary = int(blueCInBinary) & ~1 | int(binary_string[i])
-                                i += 1
+                                if i % 8 == 0:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(blueCInBinary, " is the blue value premodification")
+                                    blueCInBinary = int(blueCInBinary) & ~1 | 0
+                                    i += 1
+                                    print(blueCInBinary, " is the blue value after modification")
+                                else:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
+                                    print(blueCInBinary, " is the blue value premodification")
+                                    blueCInBinary = int(blueCInBinary) & ~1 | int(binary_string[i])
+                                    i += 1
+                                    print(blueCInBinary, " is the blue value after modification")
                     newImage.pixels[newImage_iter] = color(int(redCInBinary), int(greenCInBinary), int(blueCInBinary))
                     newImage_iter += 1
             
             newImage.updatePixels()
-            dialog.close();
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
                         
