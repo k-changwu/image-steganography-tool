@@ -11,14 +11,14 @@ def draw():
     LSB_mode()
 
 def start():
-    global booster 
+    global booster
     if keyPressed == True:
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             image(img, 0, 0)
-            
+
 def color_cycling_mode():
     global booster
     if keyPressed == True:
@@ -37,8 +37,13 @@ def color_cycling_mode():
                     # else, black
                 # save newImage
 
+def LSB_insertion(old_binary_color, bit_of_string):
+    new_binary_color = old_binary_color[:-1] # everything up until last digit
+    new_binary_color += bit_of_string
+    return new_binary_color
+
 def LSB_mode():
-    global booster 
+    global booster
     if keyPressed == True:
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
@@ -47,8 +52,8 @@ def LSB_mode():
             image(img, 0, 0)
             loadPixels()
             # #selection = UiBooster().showConfirmDialog("Would you like to embed a message?", "Are you sure?", () -> print("Action accepted"), () -> print("Action declined"))
-            # #if selection == "Yes":  
-            message = UiBooster().showTextInputDialog("What message do you want to hide?") 
+            # #if selection == "Yes":
+            message = UiBooster().showTextInputDialog("What message do you want to hide?")
             # dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
             # dialog.setMessage("Ready");
             message_bytes = message.encode("ascii")
@@ -81,54 +86,53 @@ def LSB_mode():
                         if i < len(binary_string):
                             if n == 0:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = int(redCInBinary) & ~1 | 0
-                                    i += 1
-                                    print(redCInBinary, " is the red value after modification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(redCInBinary, " is the red value premodification")
+                                    redCInBinary = int(LSB_insertion(redCInBinary, '0'))
+                                    # print(redCInBinary, " is the red value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = int(redCInBinary) & ~1 | int(binary_string[i])
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(redCInBinary, " is the red value premodification")
+                                    redCInBinary = int(LSB_insertion(redCInBinary, binary_string[i]))
                                     i += 1
-                                    print(redCInBinary, " is the red value after modification")
+                                    # print(redCInBinary, " is the red value after modification")
                             if n == 1:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = int(greenCInBinary) & ~1 | 0
-                                    i += 1
-                                    print(greenCInBinary, " is the green value after modification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(greenCInBinary, " is the green value premodification")
+                                    greenCInBinary = int(LSB_insertion(greenCInBinary, '0'))
+                                    # print(greenCInBinary, " is the green value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = int(greenCInBinary) & ~1 | int(binary_string[i])
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(greenCInBinary, " is the green value premodification")
+                                    greenCInBinary = int(LSB_insertion(greenCInBinary, binary_string[i]))
                                     i += 1
-                                    print(greenCInBinary, " is the green value after modification")
+                                    # print(greenCInBinary, " is the green value after modification")
                             if n == 2:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(blueCInBinary, " is the blue value premodification")
-                                    blueCInBinary = int(blueCInBinary) & ~1 | 0
-                                    i += 1
-                                    print(blueCInBinary, " is the blue value after modification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(blueCInBinary, " is the blue value premodification")
+                                    blueCInBinary = int(LSB_insertion(blueCInBinary, '0'))
+                                    # print(blueCInBinary, " is the blue value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(blueCInBinary, " is the blue value premodification")
-                                    blueCInBinary = int(blueCInBinary) & ~1 | int(binary_string[i])
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(blueCInBinary, " is the blue value premodification")
+                                    # print(binary_string[i] + " HERE")
+                                    blueCInBinary = int(LSB_insertion(blueCInBinary, binary_string[i]))
                                     i += 1
-                                    print(blueCInBinary, " is the blue value after modification")
+                                    # print(blueCInBinary, " is the blue value after modification")
+                    print(int(redCInBinary), " NEW RED COLOR")
+                    print(int(greenCInBinary), " NEW green COLOR")
+                    print(int(blueCInBinary), " NEW blue COLOR")
                     newImage.pixels[newImage_iter] = color(int(redCInBinary), int(greenCInBinary), int(blueCInBinary))
                     newImage_iter += 1
             
             newImage.updatePixels()
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
-                        
-                        
