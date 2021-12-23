@@ -90,13 +90,13 @@ def LSB_mode():
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = int(LSB_insertion(redCInBinary, '0'))
+                                    redCInBinary = LSB_insertion(redCInBinary, '0')
                                     print(redCInBinary, " is the red value after modification")
                                 else:
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = int(LSB_insertion(redCInBinary, binary_string[i]))
+                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
                                     i += 1
                                     print(redCInBinary, " is the red value after modification")
                             if n == 1:
@@ -104,13 +104,13 @@ def LSB_mode():
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = int(LSB_insertion(greenCInBinary, '0'))
+                                    greenCInBinary = LSB_insertion(greenCInBinary, '0')
                                     print(greenCInBinary, " is the green value after modification")
                                 else:
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = int(LSB_insertion(greenCInBinary, binary_string[i]))
+                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
                                     i += 1
                                     print(greenCInBinary, " is the green value after modification")
                             if n == 2:
@@ -118,20 +118,20 @@ def LSB_mode():
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(blueCInBinary, " is the blue value premodification")
-                                    blueCInBinary = int(LSB_insertion(blueCInBinary, '0'))
+                                    blueCInBinary = LSB_insertion(blueCInBinary, '0')
                                     print(blueCInBinary, " is the blue value after modification")
                                 else:
                                     print(x, "is the x value where we at")
                                     print(y, "is the y value where we at")
                                     print(blueCInBinary, " is the blue value premodification")
                                     # print(binary_string[i] + " HERE")
-                                    blueCInBinary = int(LSB_insertion(blueCInBinary, binary_string[i]))
+                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
                                     i += 1
                                     print(blueCInBinary, " is the blue value after modification")
                     # print(int(str(redCInBinary), base = 2), " NEW RED COLOR")
                     # print(int(str(greenCInBinary), base = 2), " NEW green COLOR")
                     # print(int(str(blueCInBinary), base = 2), " NEW blue COLOR")
-                    newImage.pixels[newImage_iter] = color(int(str(redCInBinary), base = 2), int(str(greenCInBinary), base = 2), int(str(blueCInBinary), base = 2))
+                    newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage_iter += 1
             
             newImage.updatePixels()
