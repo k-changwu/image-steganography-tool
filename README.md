@@ -23,3 +23,6 @@ Worked on debugging the LSB insertion algorithm and learned about the bitwise op
 ### Dec 20, 2021 (Monday)
 - **Rickey** 🌪️  
 Located and resolved a bug where the binary numbers when doing bitwise operations on them had only seven digits to work with instead of eight.
+### Dec 22, 2021 (Wednesday)
+- **Rickey** 🌪️  
+Finally finished debugging and implementing the LSB insertion hidden message embedding algorithm. Tested with the red sample image, and it created a new image which still looked red, but the first ten pixels had their RGB values slightly altered by one while the other pixels had the same values as the original image.
