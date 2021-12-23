@@ -86,48 +86,36 @@ def LSB_mode():
                         # print(len(binary_string), "LENGTH OF BSTRING")
                         if i < len(binary_string):
                             if n == 0:
-                                if i % 8 == 0:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = LSB_insertion(redCInBinary, '0')
-                                    # print(redCInBinary, " is the red value after modification")
-                                else:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(redCInBinary, " is the red value premodification")
-                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
-                                    i += 1
-                                    # print(redCInBinary, " is the red value after modification")
+                                # print(x, "is the x value where we at")
+                                # print(y, "is the y value where we at")
+                                if x <= 10 and y == 0:
+                                    print("(", x, ",", y, ")")
+                                    print(redCInBinary, " is the red value premodification")
+                                redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                i += 1
+                                if x <= 10 and y == 0:
+                                    print(redCInBinary, " is the red value after modification")
                             if n == 1:
-                                if i % 8 == 0:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = LSB_insertion(greenCInBinary, '0')
-                                    # print(greenCInBinary, " is the green value after modification")
-                                else:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(greenCInBinary, " is the green value premodification")
-                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
-                                    i += 1
-                                    # print(greenCInBinary, " is the green value after modification")
+                                # print(x, "is the x value where we at")
+                                # print(y, "is the y value where we at")
+                                if x <= 10 and y == 0:
+                                    print("(", x, ",", y, ")")
+                                    print(greenCInBinary, " is the green value premodification")
+                                greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                i += 1
+                                if x <= 10 and y == 0:
+                                    print(greenCInBinary, " is the green value after modification")
                             if n == 2:
-                                if i % 8 == 0:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(blueCInBinary, " is the blue value premodification")
-                                    blueCInBinary = LSB_insertion(blueCInBinary, '0')
-                                    # print(blueCInBinary, " is the blue value after modification")
-                                else:
-                                    # print(x, "is the x value where we at")
-                                    # print(y, "is the y value where we at")
-                                    # print(blueCInBinary, " is the blue value premodification")
-                                    # print(binary_string[i] + " HERE")
-                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
-                                    i += 1
-                                    # print(blueCInBinary, " is the blue value after modification")
+                                # print(x, "is the x value where we at")
+                                # print(y, "is the y value where we at")
+                                if x <= 10 and y == 0:
+                                    print("(", x, ",", y, ")")
+                                    print(blueCInBinary, " is the blue value premodification")
+                                # print(binary_string[i] + " HERE")
+                                blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                i += 1
+                                if x <= 10 and y == 0:
+                                    print(blueCInBinary, " is the blue value after modification")
                     # print(int(str(redCInBinary), base = 2), " NEW RED COLOR")
                     # print(int(str(greenCInBinary), base = 2), " NEW green COLOR")
                     # print(int(str(blueCInBinary), base = 2), " NEW blue COLOR")
@@ -135,8 +123,22 @@ def LSB_mode():
                     newImage_iter += 1
             
             newImage.updatePixels()
-            print(red(newImage.pixels[0]))
-            print(green(newImage.pixels[0]))
-            print(blue(newImage.pixels[0]))
+            print("NEW")
+            for i in range(0,11):
+                print(red(newImage.pixels[i]))
+                print(green(newImage.pixels[i]))
+                print(blue(newImage.pixels[i]))
+            print(red(newImage.pixels[11]))
+            print(green(newImage.pixels[11]))
+            print(blue(newImage.pixels[11]))
+            print(red(newImage.pixels[12]))
+            print(green(newImage.pixels[12]))
+            print(blue(newImage.pixels[12]))
+            print(red(newImage.pixels[13]))
+            print(green(newImage.pixels[13]))
+            print(blue(newImage.pixels[13]))
+            print(red(newImage.pixels[14]))
+            print(green(newImage.pixels[14]))
+            print(blue(newImage.pixels[14]))
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
