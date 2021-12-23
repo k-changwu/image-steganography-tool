@@ -28,6 +28,19 @@ def color_cycling_mode():
             img = loadImage(pathToImage)
             image(img, 0, 0)
             # for numbers from 0-7 (8 bits) called i
+            for channel in range(0, 3):
+                for bit in range(0, 8):
+                    new_image = createImage(img.width, img.height, RGB)
+                    new_image.loadPixels()
+                    new_image_iter = 0
+                    if channel == 0: # red channel
+                        for pixel in pixels:
+                            red_value = format(int(red(pixel)), '08b')
+                            if red_value[bit] == '0':
+                                new_image.pixels[new_image_iter] = color(255, 255, 255)
+                            else:
+                                new_image.pixels[new_image_iter] = color(0, 0, 0)
+                        # how to save image?
                 # newImage = empty image which will have pixels added to it
                 # focusing on red channel, for each pixel in the image
                     # get the red value for that pixel
