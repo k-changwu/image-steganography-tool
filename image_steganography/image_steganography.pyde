@@ -59,14 +59,14 @@ def LSB_mode():
             message_bytes = message.encode("ascii")
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode("ascii")
-            binary_string = ' '.join(format(ord(x), 'b') for x in message)
+            binary_string = ''.join(format(ord(x), '08b') for x in message)
             print(binary_string + " is what we tryna embed")
             print(red(pixels[0])) # SHOULD BE 255 ish
             print(green(pixels[0])) # SHOULD BE 0 ish
             print(blue(pixels[0])) # SHOULD BE 0 ish
-            print(binary_string, "OLD WITH SPACES SEPARATING THEM")
-            binary_string = "".join(binary_string.split())
-            # print(binary_string)
+            print(binary_string, "OLD WITH SPACES SEPARATING THEM BUT NOW NO SPACES AND 8 LONG EACH???")
+            # binary_string = "".join(binary_string.split())
+            print(len(binary_string), "HOPEFULLY 32???")
             i = 0
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
@@ -87,47 +87,47 @@ def LSB_mode():
                         if i < len(binary_string):
                             if n == 0:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(redCInBinary, " is the red value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(redCInBinary, " is the red value premodification")
                                     redCInBinary = LSB_insertion(redCInBinary, '0')
-                                    print(redCInBinary, " is the red value after modification")
+                                    # print(redCInBinary, " is the red value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(redCInBinary, " is the red value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(redCInBinary, " is the red value premodification")
                                     redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
                                     i += 1
-                                    print(redCInBinary, " is the red value after modification")
+                                    # print(redCInBinary, " is the red value after modification")
                             if n == 1:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(greenCInBinary, " is the green value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(greenCInBinary, " is the green value premodification")
                                     greenCInBinary = LSB_insertion(greenCInBinary, '0')
-                                    print(greenCInBinary, " is the green value after modification")
+                                    # print(greenCInBinary, " is the green value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(greenCInBinary, " is the green value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(greenCInBinary, " is the green value premodification")
                                     greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
                                     i += 1
-                                    print(greenCInBinary, " is the green value after modification")
+                                    # print(greenCInBinary, " is the green value after modification")
                             if n == 2:
                                 if i % 8 == 0:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(blueCInBinary, " is the blue value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(blueCInBinary, " is the blue value premodification")
                                     blueCInBinary = LSB_insertion(blueCInBinary, '0')
-                                    print(blueCInBinary, " is the blue value after modification")
+                                    # print(blueCInBinary, " is the blue value after modification")
                                 else:
-                                    print(x, "is the x value where we at")
-                                    print(y, "is the y value where we at")
-                                    print(blueCInBinary, " is the blue value premodification")
+                                    # print(x, "is the x value where we at")
+                                    # print(y, "is the y value where we at")
+                                    # print(blueCInBinary, " is the blue value premodification")
                                     # print(binary_string[i] + " HERE")
                                     blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
                                     i += 1
-                                    print(blueCInBinary, " is the blue value after modification")
+                                    # print(blueCInBinary, " is the blue value after modification")
                     # print(int(str(redCInBinary), base = 2), " NEW RED COLOR")
                     # print(int(str(greenCInBinary), base = 2), " NEW green COLOR")
                     # print(int(str(blueCInBinary), base = 2), " NEW blue COLOR")
