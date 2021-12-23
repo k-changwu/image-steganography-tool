@@ -70,6 +70,7 @@ def LSB_mode():
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
             newImage.loadPixels()
+            print("BEGINNN")
             for y in range(0, img.height):
                 for x in range(0, img.width):
                     colour = get(x,y)
@@ -83,6 +84,8 @@ def LSB_mode():
                     blueCInBinary = str(blueCInBinary)[2:]
                     greenCInBinary = str(greenCInBinary)[2:]
                     for n in range(0,3):
+                        print(i, "WHERE WE AT")
+                        print(len(binary_string), "LENGTH OF BSTRING")
                         if i < len(binary_string):
                             if n == 0:
                                 if i % 8 == 0:
@@ -127,12 +130,15 @@ def LSB_mode():
                                     blueCInBinary = int(LSB_insertion(blueCInBinary, binary_string[i]))
                                     i += 1
                                     # print(blueCInBinary, " is the blue value after modification")
-                    print(int(redCInBinary), " NEW RED COLOR")
-                    print(int(greenCInBinary), " NEW green COLOR")
-                    print(int(blueCInBinary), " NEW blue COLOR")
-                    newImage.pixels[newImage_iter] = color(int(redCInBinary), int(greenCInBinary), int(blueCInBinary))
+                    # print(int(str(redCInBinary), base = 2), " NEW RED COLOR")
+                    # print(int(str(greenCInBinary), base = 2), " NEW green COLOR")
+                    # print(int(str(blueCInBinary), base = 2), " NEW blue COLOR")
+                    newImage.pixels[newImage_iter] = color(int(str(redCInBinary), base = 2), int(str(greenCInBinary), base = 2), int(str(blueCInBinary), base = 2))
                     newImage_iter += 1
             
             newImage.updatePixels()
+            print(red(newImage.pixels[0]))
+            print(green(newImage.pixels[0]))
+            print(blue(newImage.pixels[0]))
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
