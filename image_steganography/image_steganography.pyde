@@ -8,8 +8,8 @@ def setup():
 
 def draw():
     #color_cycling_mode()
-    #LSB_mode()
-    LSB_extraction()
+    LSB_mode()
+    #LSB_extraction()
 
 def start():
     global booster
@@ -56,7 +56,12 @@ def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color += bit_of_string
     return new_binary_color
 
+def LSB_extraction_helper(new_binary_color):
+    bit = new_binary_color[-1]
+    return bit
+
 def LSB_extraction():
+    #01101111011100110110100101110011 IS RED.PNG OSIS 
     global booster
     if keyPressed == True:
         selected_image_file = booster.showFileSelection()
@@ -65,16 +70,41 @@ def LSB_extraction():
             img = loadImage(pathToImage)
             image(img, 0, 0)
             loadPixels()
-            extracted = []
-            bytes = []
+            extracted = ""
             for y in range(0, img.height):
                 for x in range(0, img.width):
-                    pixel = list(img.getpixel((y, x)))
+                    colour = get(x,y)
+                    redC = int(red(colour))
+                    greenC = int(green(colour))
+                    blueC = int(blue(colour))
+                    redCInBinary = format(redC, '08b')
+                    greenCInBinary = format(greenC, '08b')
+                    blueCInBinary = format(blueC, '08b')
                     for n in range(0,3):
-                        extracted.append(pixel[n] &1)
-            data = "".join([str(x) for x in extracted])
-            print(data)
+                        if n == 0: 
+                            extracted_bit = LSB_extraction_helper(redCInBinary)
+                            print(extracted_bit, "SHOULD BE 0 FIRST TIME")
+                            extracted += (extracted_bit)
+                        if n == 1:
+                            extracted_bit = LSB_extraction_helper(greenCInBinary)
+                            print(extracted_bit, "SHOULD BE 1 FIRST TIME")
+                            extracted += (extracted_bit)
+                        if n == 2:
+                            extracted_bit = LSB_extraction_helper(blueCInBinary)
+                            print(extracted_bit, "SHOULD BE 1 FIRST TIME")
+                            extracted += (extracted_bit)
+            encoded_message = ""
+            for i in range(len(extracted)):
+                if encoded_message[-3] == "3ND":
+                    break
+                else:
+                    encoded_message += chr(int(extracted[i], 2))
+            if "3ND" in encoded_message:
+                print("HIDDEN MESSAGE IS: ", encoded_message[:-3])
+            else:
+                print("NO HIDDEN MESSAGE FOUND")
             
+
 def LSB_mode():
     global booster
     if keyPressed == True:
