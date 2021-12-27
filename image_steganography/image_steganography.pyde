@@ -8,7 +8,8 @@ def setup():
 
 def draw():
     #color_cycling_mode()
-    LSB_mode()
+    #LSB_mode()
+    LSB_extraction()
 
 def start():
     global booster
@@ -55,6 +56,25 @@ def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color += bit_of_string
     return new_binary_color
 
+def LSB_extraction():
+    global booster
+    if keyPressed == True:
+        selected_image_file = booster.showFileSelection()
+        if selected_image_file != None:
+            pathToImage = selected_image_file.getAbsolutePath()
+            img = loadImage(pathToImage)
+            image(img, 0, 0)
+            loadPixels()
+            extracted = []
+            bytes = []
+            for y in range(0, img.height):
+                for x in range(0, img.width):
+                    pixel = list(img.getpixel((y, x)))
+                    for n in range(0,3):
+                        extracted.append(pixel[n] &1)
+            data = "".join([str(x) for x in extracted])
+            print(data)
+            
 def LSB_mode():
     global booster
     if keyPressed == True:
@@ -69,6 +89,7 @@ def LSB_mode():
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             # dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
             # dialog.setMessage("Ready");
+            message_with_limit = message + "3nD" #so we know where the end for decoding is
             message_bytes = message.encode("ascii")
             base64_bytes = base64.b64encode(message_bytes)
             base64_message = base64_bytes.decode("ascii")
@@ -80,6 +101,10 @@ def LSB_mode():
             print(binary_string, "OLD WITH SPACES SEPARATING THEM BUT NOW NO SPACES AND 8 LONG EACH???")
             # binary_string = "".join(binary_string.split())
             print(len(binary_string), "HOPEFULLY 32???")
+            msg_len = len(binary_string)
+            print(img.width * img.height, "TOTAL NUM PIXELS")
+            if (msg_len > img.width * img.height):
+                print("ERROR: LARGER FILE SIZE NEEDED")
             i = 0
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
@@ -155,3 +180,4 @@ def LSB_mode():
             print(blue(newImage.pixels[14]))
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
+            save("Encoded_Image.PNG") #save new img
