@@ -83,11 +83,11 @@ def LSB_extraction():
                     for n in range(0,3):
                         if n == 0: 
                             extracted_bit = LSB_extraction_helper(redCInBinary)
-                            print(extracted_bit, "SHOULD BE 0 FIRST TIME")
+                            print(extracted_bit, "SHOULD BE 0 FIRST TIME") #wrong here
                             extracted += (extracted_bit)
                         if n == 1:
                             extracted_bit = LSB_extraction_helper(greenCInBinary)
-                            print(extracted_bit, "SHOULD BE 1 FIRST TIME")
+                            print(extracted_bit, "SHOULD BE 1 FIRST TIME") 
                             extracted += (extracted_bit)
                         if n == 2:
                             extracted_bit = LSB_extraction_helper(blueCInBinary)
