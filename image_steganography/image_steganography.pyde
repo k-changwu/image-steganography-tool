@@ -7,8 +7,8 @@ def setup():
     background(color(37, 37, 38))
 
 def draw():
-    #color_cycling_mode()
-    LSB_mode()
+    color_cycling_mode()
+    #LSB_mode()
     #LSB_extraction()
 
 def start():
@@ -27,6 +27,7 @@ def color_cycling_mode():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
+            img.loadPixels()
             image(img, 0, 0)
             image_id = 0
             # for numbers from 0-7 (8 bits) called i
@@ -36,7 +37,7 @@ def color_cycling_mode():
                     new_image.loadPixels()
                     new_image_iter = 0
                     if channel == 0: # red channel
-                        for pixel in pixels:
+                        for pixel in img.pixels:
                             red_value = format(int(red(pixel)), '08b')
                             if red_value[bit] == '0':
                                 new_image.pixels[new_image_iter] = color(255, 255, 255)
@@ -44,7 +45,7 @@ def color_cycling_mode():
                                 new_image.pixels[new_image_iter] = color(0, 0, 0)
                             new_image_iter += 1
                     elif channel == 1: # green channel
-                        for pixel in pixels:
+                        for pixel in img.pixels:
                             green_value = format(int(green(pixel)), '08b')
                             if green_value[bit] == '0':
                                 new_image.pixels[new_image_iter] = color(255, 255, 255)
@@ -52,7 +53,7 @@ def color_cycling_mode():
                                 new_image.pixels[new_image_iter] = color(0, 0, 0)
                             new_image_iter += 1
                     else: # blue channel
-                        for pixel in pixels:
+                        for pixel in img.pixels:
                             blue_value = format(int(blue(pixel)), '08b')
                             if blue_value[bit] == '0':
                                 new_image.pixels[new_image_iter] = color(255, 255, 255)
@@ -61,7 +62,6 @@ def color_cycling_mode():
                             new_image_iter += 1
                     new_image.save("color_cycling_variants/image_variation_"+str(image_id)+".png")
                     image_id += 1
-                        # how to save image?
                 # newImage = empty image which will have pixels added to it
                 # focusing on red channel, for each pixel in the image
                     # get the red value for that pixel
