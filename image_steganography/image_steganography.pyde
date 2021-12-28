@@ -41,6 +41,23 @@ def color_cycling_mode():
                                 new_image.pixels[new_image_iter] = color(255, 255, 255)
                             else:
                                 new_image.pixels[new_image_iter] = color(0, 0, 0)
+                            new_image_iter += 1
+                    elif channel == 1: # green channel
+                        for pixel in pixels:
+                            green_value = format(int(green(pixel)), '08b')
+                            if green_value[bit] == '0':
+                                new_image.pixels[new_image_iter] = color(255, 255, 255)
+                            else:
+                                new_image.pixels[new_image_iter] = color(0, 0, 0)
+                            new_image_iter += 1
+                    else: # blue channel
+                        for pixel in pixels:
+                            blue_value = format(int(blue(pixel)), '08b')
+                            if blue_value[bit] == '0':
+                                new_image.pixels[new_image_iter] = color(255, 255, 255)
+                            else:
+                                new_image.pixels[new_image_iter] = color(0, 0, 0)
+                            new_image_iter += 1
                         # how to save image?
                 # newImage = empty image which will have pixels added to it
                 # focusing on red channel, for each pixel in the image
