@@ -7,9 +7,9 @@ def setup():
     background(color(37, 37, 38))
 
 def draw():
-    color_cycling_mode()
+    #color_cycling_mode()
     #LSB_mode()
-    #LSB_extraction()
+    LSB_extraction()
 
 def start():
     global booster
@@ -91,6 +91,7 @@ def LSB_extraction():
             image(img, 0, 0)
             loadPixels()
             extracted = ""
+            print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             for y in range(0, img.height):
                 for x in range(0, img.width):
                     colour = get(x,y)
@@ -102,28 +103,58 @@ def LSB_extraction():
                     blueCInBinary = format(blueC, '08b')
                     for n in range(0,3):
                         if n == 0: 
-                            extracted_bit = LSB_extraction_helper(redCInBinary)
-                            print(extracted_bit, "SHOULD BE 0 FIRST TIME") #wrong here
-                            extracted += (extracted_bit)
+                            if x <= 10 and y == 0:
+                                print("(", x, ",", y, ")")
+                                print(redCInBinary, " is the red value premodification")
+                                extracted_bit = LSB_extraction_helper(redCInBinary)
+                                extracted += (extracted_bit)
+                                print(extracted_bit, " IS THE EXTRACTED BIT")
+                            if x <= 10 and y == 0:
+                                print(redCInBinary, " is the red value after modification; should be same for now")
+                            
                         if n == 1:
-                            extracted_bit = LSB_extraction_helper(greenCInBinary)
-                            print(extracted_bit, "SHOULD BE 1 FIRST TIME") 
-                            extracted += (extracted_bit)
+                            if x <= 10 and y == 0:
+                                print("(", x, ",", y, ")")
+                                print(greenCInBinary, " is the green value premodification")
+                                extracted_bit = LSB_extraction_helper(greenCInBinary)
+                                extracted += (extracted_bit)
+                                print(extracted_bit, " IS THE EXTRACTED BIT")
+                            if x <= 10 and y == 0:
+                                print(greenCInBinary, " is the green value after modification; should be same for now")
                         if n == 2:
-                            extracted_bit = LSB_extraction_helper(blueCInBinary)
-                            print(extracted_bit, "SHOULD BE 1 FIRST TIME")
-                            extracted += (extracted_bit)
-            encoded_message = ""
-            for i in range(len(extracted)):
-                if encoded_message[-3] == "3ND":
-                    break
-                else:
-                    encoded_message += chr(int(extracted[i], 2))
-            if "3ND" in encoded_message:
-                print("HIDDEN MESSAGE IS: ", encoded_message[:-3])
-            else:
-                print("NO HIDDEN MESSAGE FOUND")
+                            if x <= 10 and y == 0:
+                                print("(", x, ",", y, ")")
+                                print(blueCInBinary, " is the green value premodification")
+                                extracted_bit = LSB_extraction_helper(blueCInBinary)
+                                extracted += (extracted_bit)
+                                print(extracted_bit, " IS THE EXTRACTED BIT")
+                            if x <= 10 and y == 0:
+                                print(blueCInBinary, " is the green value after modification; should be same for now")
+            print(extracted, "ALL THE EXTRACTED BITS SHOULD EQUAL MSG + 3ND")
+            print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             
+            end_limit = "3ND"
+            end_limit_bytes = end_limit.encode("ascii")
+            base64_end_bytes = base64.b64encode(end_limit_bytes)
+            base64_end_limit_bytes = base64_end_bytes.decode("ascii")
+            end_binary_string = ''.join(format(ord(x), '08b') for x in end_limit)
+            print(end_binary_string, "WHAT THE END LIMIT LOOKS LIKE")
+            
+            extracted_converting = "0" + extracted[2:]
+            encoded_message = ""
+            while extracted_converting != "":
+                i = chr(int(extracted_converting[:8], 2))
+                encoded_message += i
+                extracted_converting = extracted_converting[8:]
+            print(encoded_message, "TESTING HERE")
+            
+            msg_found = False
+            spot = encoded_message.find( "3ND")
+        
+            if spot != -1:
+                print("HIDDEN MESSAGE IS", encoded_message[:spot]
+            if spot == -1:
+                print("NO HIDDEN MESSAGE FOUND")
 
 def LSB_mode():
     global booster
@@ -139,10 +170,15 @@ def LSB_mode():
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             # dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
             # dialog.setMessage("Ready");
-            message_with_limit = message + "3nD" #so we know where the end for decoding is
+            #message_with_limit = message + "3nD" #so we know where the end for decoding is
+            message += "3ND" 
+            # ARE MESSAGES LIMITED TO ASCII????
             message_bytes = message.encode("ascii")
+            #print(message_bytes, "ENCODE ASCII")
             base64_bytes = base64.b64encode(message_bytes)
+            #print(base64_bytes, "ENCODE BASE64")
             base64_message = base64_bytes.decode("ascii")
+            #print(base64_message, "DECODE ASCII")
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             print(binary_string + " is what we tryna embed")
             print(red(pixels[0])) # SHOULD BE 255 ish
