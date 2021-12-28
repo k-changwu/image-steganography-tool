@@ -28,6 +28,7 @@ def color_cycling_mode():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             image(img, 0, 0)
+            image_id = 0
             # for numbers from 0-7 (8 bits) called i
             for channel in range(0, 3):
                 for bit in range(0, 8):
@@ -58,6 +59,8 @@ def color_cycling_mode():
                             else:
                                 new_image.pixels[new_image_iter] = color(0, 0, 0)
                             new_image_iter += 1
+                    new_image.save("color_cycling_variants/image_variation_"+str(image_id)+".png")
+                    image_id += 1
                         # how to save image?
                 # newImage = empty image which will have pixels added to it
                 # focusing on red channel, for each pixel in the image
