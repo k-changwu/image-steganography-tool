@@ -26,6 +26,9 @@ Located and resolved a bug where the binary numbers when doing bitwise operation
 ### Dec 22, 2021 (Wednesday)
 - **Rickey** 🌪️  
 Finally finished debugging and implementing the LSB insertion hidden message embedding algorithm. Tested with the red sample image, and it created a new image which still looked red, but the first ten pixels had their RGB values slightly altered by one while the other pixels had the same values as the original image.
+### Dec 23, 2021 (Thursday)
+- **Rickey** 🌪️  
+Began work on implementing the color cycling algorithm; need to figure out a way to store all the 24 image variations.
 ### Dec 27, 2021 (Monday)
 - **Katherine** 🧊  
 Worked on LSB extraction method for decoding an image with a message embedded in it. Edited LSB insertion function to add a string to the end of the message to identify the end of the embedded message and to save the new image to use for testing extraction.
