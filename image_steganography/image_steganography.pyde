@@ -91,50 +91,64 @@ def LSB_extraction():
             image(img, 0, 0)
             loadPixels()
             print("BEGIN EXTRACTING")
-            extracted = ""
+            delimiter_found = False
+            location_of_delimiter = 0
             pixel_iter = 0
+            bit_iter = 0
+            bit_iter_max = 0
+            extracted  = ""
             print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
+            
             for y in range(0, img.height):
                 for x in range(0, img.width):
-                    colour = get(x,y)
-                    redC = int(red(colour))
-                    greenC = int(green(colour))
-                    blueC = int(blue(colour))
-                    redCInBinary = format(redC, '08b')
-                    greenCInBinary = format(greenC, '08b')
-                    blueCInBinary = format(blueC, '08b')
-                    for n in range(0,3):
-                        if n == 0: 
-                            extracted_bit = LSB_extraction_helper(redCInBinary)
-                            extracted += (extracted_bit)
+                    while not delimiter_found:
+                        colour = get(x,y)
+                        redC = int(red(colour))
+                        greenC = int(green(colour))
+                        blueC = int(blue(colour))
+                        redCInBinary = format(redC, '08b')
+                        greenCInBinary = format(greenC, '08b')
+                        blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            while bit_iter_max < 24:
+                                if n == 0: 
+                                    extracted_bit = LSB_extraction_helper(redCInBinary)
+                                    extracted += (extracted_bit)
+                                if n == 1:
+                                    extracted_bit = LSB_extraction_helper(greenCInBinary)
+                                    extracted += (extracted_bit) 
+                                if n == 2:
+                                    extracted_bit = LSB_extraction_helper(blueCInBinary)
+                                    extracted += (extracted_bit)
+                                bit_iter_max += 1
+                                bit_iter += 1
+                            if current_potential_string == '001100110100111001000100': # FIX THIS LATER
+                                 delimiter_found = True
+                            else:
+                                current_potential_string = ""
+                                bit_iter_max -= 1
+                            pixel_iter += 1
+                            print(pixel_iter, "WHAT PIXEL WE ON")
+            print(bit_iter, 'OLD')
+            bit_iter -= 47
+            print(bit_iter, 'NEW')
+            secret_message = ""
+            while bit_count < bit_iter:
+                for n in range(0,3):
+                    if bit_count < bit_iter:
+                        if n == 0:
+                            secret_message += format(LSB_extraction_helper((int(red(img.pixels[pixel_iter])), '08b')))
+                            bit_count += 1
                         if n == 1:
-                            extracted_bit = LSB_extraction_helper(greenCInBinary)
-                            extracted += (extracted_bit) 
+                            secret_message += format(LSB_extraction_helper((int(green(img.pixels[pixel_iter])), '08b')))
+                            bit_count += 1
                         if n == 2:
-                            extracted_bit = LSB_extraction_helper(blueCInBinary)
-                            extracted += (extracted_bit)
-                    pixel_iter += 1
-                    print(pixel_iter, "WHAT PIXEL WE ON")
-                    
-            print("DONE EXTRACTING LSB FROM WHOLE IMG")            
-            print(extracted, "ALL THE EXTRACTED BITS SHOULD EQUAL MSG + 3ND")
-            print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
-            
-            end_limit = "3ND"
-            end_binary_string = ''.join(format(ord(x), '08b') for x in end_limit)
-            print(end_binary_string, "WHAT THE END LIMIT LOOKS LIKE")
-            
+                            secret_message += format(LSB_extraction_helper((int(blue(img.pixels[pixel_iter])), '08b')))
+                            bit_count += 1
+                pixel_iter += 1
+            print(secret_message)
+    
 
-            byte_num = extracted.bit_length() + 7 // 8
-            bin_array = extracted.to_bytes(byte_num, "big")
-            encoded_message = bin_array.decode()
-            print(encoded_message, "TESTING HERE")
-   
-            spot = encoded_message.find( "3ND")
-            if spot != -1:
-                print("HIDDEN MESSAGE IS", encoded_message[:spot])
-            if spot == -1:
-                print("NO HIDDEN MESSAGE FOUND")
                 
 
 def LSB_mode():
