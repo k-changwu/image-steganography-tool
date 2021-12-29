@@ -78,7 +78,7 @@ def LSB_insertion(old_binary_color, bit_of_string):
 
 def LSB_extraction_helper(new_binary_color):
     bit = new_binary_color[-1]
-    return bit
+    return bit        
 
 def LSB_extraction():
     #01101111011100110110100101110011 IS RED.PNG OSIS 
@@ -103,40 +103,21 @@ def LSB_extraction():
                     blueCInBinary = format(blueC, '08b')
                     for n in range(0,3):
                         if n == 0: 
-                            if x <= 10 and y == 0:
-                                print("(", x, ",", y, ")")
-                                print(redCInBinary, " is the red value premodification")
-                                extracted_bit = LSB_extraction_helper(redCInBinary)
-                                extracted += (extracted_bit)
-                                print(extracted_bit, " IS THE EXTRACTED BIT")
-                            if x <= 10 and y == 0:
-                                print(redCInBinary, " is the red value after modification; should be same for now")
+                            extracted_bit = LSB_extraction_helper(redCInBinary)
+                            extracted += (extracted_bit)
                             
                         if n == 1:
-                            if x <= 10 and y == 0:
-                                print("(", x, ",", y, ")")
-                                print(greenCInBinary, " is the green value premodification")
-                                extracted_bit = LSB_extraction_helper(greenCInBinary)
-                                extracted += (extracted_bit)
-                                print(extracted_bit, " IS THE EXTRACTED BIT")
-                            if x <= 10 and y == 0:
-                                print(greenCInBinary, " is the green value after modification; should be same for now")
+                            extracted_bit = LSB_extraction_helper(greenCInBinary)
+                            extracted += (extracted_bit)
+                            
                         if n == 2:
-                            if x <= 10 and y == 0:
-                                print("(", x, ",", y, ")")
-                                print(blueCInBinary, " is the green value premodification")
-                                extracted_bit = LSB_extraction_helper(blueCInBinary)
-                                extracted += (extracted_bit)
-                                print(extracted_bit, " IS THE EXTRACTED BIT")
-                            if x <= 10 and y == 0:
-                                print(blueCInBinary, " is the green value after modification; should be same for now")
+                            extracted_bit = LSB_extraction_helper(blueCInBinary)
+                            extracted += (extracted_bit)
+                            
             print(extracted, "ALL THE EXTRACTED BITS SHOULD EQUAL MSG + 3ND")
             print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             
             end_limit = "3ND"
-            end_limit_bytes = end_limit.encode("ascii")
-            base64_end_bytes = base64.b64encode(end_limit_bytes)
-            base64_end_limit_bytes = base64_end_bytes.decode("ascii")
             end_binary_string = ''.join(format(ord(x), '08b') for x in end_limit)
             print(end_binary_string, "WHAT THE END LIMIT LOOKS LIKE")
             
@@ -148,13 +129,13 @@ def LSB_extraction():
                 extracted_converting = extracted_converting[8:]
             print(encoded_message, "TESTING HERE")
             
-            msg_found = False
+   
             spot = encoded_message.find( "3ND")
-        
             if spot != -1:
-                print("HIDDEN MESSAGE IS", encoded_message[:spot]
+                print("HIDDEN MESSAGE IS", encoded_message[:spot])
             if spot == -1:
                 print("NO HIDDEN MESSAGE FOUND")
+                
 
 def LSB_mode():
     global booster
@@ -189,7 +170,7 @@ def LSB_mode():
             print(len(binary_string), "HOPEFULLY 32???")
             msg_len = len(binary_string)
             print(img.width * img.height, "TOTAL NUM PIXELS")
-            if (msg_len > img.width * img.height):
+            if (msg_len > img.width * img.height * 3):
                 print("ERROR: LARGER FILE SIZE NEEDED")
             i = 0
             newImage_iter = 0
@@ -266,4 +247,5 @@ def LSB_mode():
             print(blue(newImage.pixels[14]))
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
-            save("Encoded_Image.PNG") #save new img
+            #save("Encoded_Image.PNG") #save new img
+            newImage.save("Encoded_Image.PNG")
