@@ -90,7 +90,9 @@ def LSB_extraction():
             img = loadImage(pathToImage)
             image(img, 0, 0)
             loadPixels()
+            print("BEGIN EXTRACTING")
             extracted = ""
+            pixel_iter = 0
             print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             for y in range(0, img.height):
                 for x in range(0, img.width):
@@ -105,15 +107,16 @@ def LSB_extraction():
                         if n == 0: 
                             extracted_bit = LSB_extraction_helper(redCInBinary)
                             extracted += (extracted_bit)
-                            
                         if n == 1:
                             extracted_bit = LSB_extraction_helper(greenCInBinary)
-                            extracted += (extracted_bit)
-                            
+                            extracted += (extracted_bit) 
                         if n == 2:
                             extracted_bit = LSB_extraction_helper(blueCInBinary)
                             extracted += (extracted_bit)
-                            
+                    pixel_iter += 1
+                    print(pixel_iter, "WHAT PIXEL WE ON")
+                    
+            print("DONE EXTRACTING LSB FROM WHOLE IMG")            
             print(extracted, "ALL THE EXTRACTED BITS SHOULD EQUAL MSG + 3ND")
             print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             
@@ -121,14 +124,11 @@ def LSB_extraction():
             end_binary_string = ''.join(format(ord(x), '08b') for x in end_limit)
             print(end_binary_string, "WHAT THE END LIMIT LOOKS LIKE")
             
-            extracted_converting = "0" + extracted[2:]
-            encoded_message = ""
-            while extracted_converting != "":
-                i = chr(int(extracted_converting[:8], 2))
-                encoded_message += i
-                extracted_converting = extracted_converting[8:]
+
+            byte_num = extracted.bit_length() + 7 // 8
+            bin_array = extracted.to_bytes(byte_num, "big")
+            encoded_message = bin_array.decode()
             print(encoded_message, "TESTING HERE")
-            
    
             spot = encoded_message.find( "3ND")
             if spot != -1:
@@ -247,5 +247,4 @@ def LSB_mode():
             print(blue(newImage.pixels[14]))
             image(newImage, 0, 0)
             print("DONE WITH EMBEDDING")
-            #save("Encoded_Image.PNG") #save new img
             newImage.save("Encoded_Image.PNG")
