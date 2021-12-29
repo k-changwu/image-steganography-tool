@@ -96,57 +96,56 @@ def LSB_extraction():
             pixel_iter = 0
             bit_iter = 0
             bit_iter_max = 0
-            extracted  = ""
+            current_potential_string = ""
             print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
             
-            for y in range(0, img.height):
-                for x in range(0, img.width):
-                    while not delimiter_found:
-                        colour = get(x,y)
-                        redC = int(red(colour))
-                        greenC = int(green(colour))
-                        blueC = int(blue(colour))
-                        redCInBinary = format(redC, '08b')
-                        greenCInBinary = format(greenC, '08b')
-                        blueCInBinary = format(blueC, '08b')
-                        for n in range(0,3):
-                            while bit_iter_max < 24:
-                                if n == 0: 
-                                    extracted_bit = LSB_extraction_helper(redCInBinary)
-                                    extracted += (extracted_bit)
-                                if n == 1:
-                                    extracted_bit = LSB_extraction_helper(greenCInBinary)
-                                    extracted += (extracted_bit) 
-                                if n == 2:
-                                    extracted_bit = LSB_extraction_helper(blueCInBinary)
-                                    extracted += (extracted_bit)
-                                bit_iter_max += 1
-                                bit_iter += 1
-                            if current_potential_string == '001100110100111001000100': # FIX THIS LATER
-                                 delimiter_found = True
-                            else:
-                                current_potential_string = ""
-                                bit_iter_max -= 1
-                            pixel_iter += 1
-                            print(pixel_iter, "WHAT PIXEL WE ON")
+            while pixel_iter < len(img.pixels) and not delimiter_found:
+                for n in range(0,3):
+                    while bit_iter_max < 24:
+                        if n == 0:
+                            current_red_color = format(int(red(img.pixels[pixel_iter])), '08b')
+                            print(current_red_color, "CHECKING")
+                            current_potential_string += current_red_color[-1]
+                        if n == 1:
+                            current_green_color = format(int(green(img.pixels[pixel_iter])), '08b')
+                            print(current_green_color, "CHECKING")
+                            current_potential_string += current_green_color[-1]
+                            
+                        if n == 2:
+                            current_blue_color = format(int(blue(img.pixels[pixel_iter])), '08b')
+                            print(current_blue_color, "CHECKING")
+                            current_potential_string += current_blue_color[-1]
+                            
+                        bit_iter_max += 1
+                        bit_iter += 1 # we have attempted by adding one channel now
+                    if current_potential_string == '001100110100111001000100': 
+                        delimiter_found = True
+                    else:
+                        current_potential_string = current_potential_string[1:]
+                        bit_iter_max -= 1
+                        # continue appending through other pixels one at a time
+                    pixel_iter += 1
+                    print(pixel_iter, "WHAT PIXEL WE ON")
+            
+            # assumes delimiter is present        
             print(bit_iter, 'OLD')
-            bit_iter -= 47
+            bit_iter -= 47 # bit_iter is now the location of where delimiter is
             print(bit_iter, 'NEW')
             secret_message = ""
             while bit_count < bit_iter:
                 for n in range(0,3):
                     if bit_count < bit_iter:
                         if n == 0:
-                            secret_message += format(LSB_extraction_helper((int(red(img.pixels[pixel_iter])), '08b')))
+                            secret_message += (format(int(red(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
                         if n == 1:
-                            secret_message += format(LSB_extraction_helper((int(green(img.pixels[pixel_iter])), '08b')))
+                            secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
                         if n == 2:
-                            secret_message += format(LSB_extraction_helper((int(blue(img.pixels[pixel_iter])), '08b')))
+                            secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
-                pixel_iter += 1
-            print(secret_message)
+                    pixel_iter += 1
+            print(secret_message, "SHOULD BE OSIS")
     
 
                 
