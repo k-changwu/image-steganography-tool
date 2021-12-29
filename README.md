@@ -29,12 +29,12 @@ Finally finished debugging and implementing the LSB insertion hidden message emb
 ### Dec 23, 2021 (Thursday)
 - **Rickey** 🌪️  
 Began work on implementing the color cycling algorithm; need to figure out a way to store all the 24 image variations.
-### Dec 27, 2021 (Monday)
+### Dec 27, 2021 (Monday) (winter break ❄️)
 - **Katherine** 🧊  
 Worked on LSB extraction method for decoding an image with a message embedded in it. Edited LSB insertion function to add a string to the end of the message to identify the end of the embedded message and to save the new image to use for testing extraction.
 - **Rickey** 🌪️  
 Successfully implemented the color cycling mode. Tested the algorithm on the dark.png file from Task 16 in THM CTF Collection Vol 1, and it worked; generated 24 image variations, two of them showing the flag, just like how Aperisolve (an online web tool) did. However, while Aperisolve had some more color, these images were purely black and white. Will try to look into that more and will try to utilize the UiBooster gallery photo feature.
-### Dec 28, 2021 (Tuesday)
+### Dec 28, 2021 (Tuesday) (winter break ❄️)
 - **Katherine** 🧊  
 Worked on debugging LSB extraction method. Noticed extracted bits did not include the limiter added. Since the limiter string is not found, the function concludes that there is no hidden message found. 
 - **Rickey** 🌪️  
