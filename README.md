@@ -37,3 +37,5 @@ Successfully implemented the color cycling mode. Tested the algorithm on the dar
 ### Dec 28, 2021 (Tuesday)
 - **Katherine** 🧊  
 Worked on debugging LSB extraction method. Noticed extracted bits did not include the limiter added. Since the limiter string is not found, the function concludes that there is no hidden message found. 
+- **Rickey** 🌪️  
+Did more research on new algorithms / steganography techniques and brainstormed on what to implement next for our tool, such as masking + filtering and randomized LSB.
