@@ -97,41 +97,35 @@ def LSB_extraction():
             bit_iter = 0
             bit_iter_max = 0
             current_potential_string = ""
-            print ("01101111011100110110100101110011001100110100111001000100 IS OSIS + 3ND IN BINARY")
-            
             while pixel_iter < len(img.pixels) and not delimiter_found:
                 for n in range(0,3):
-                    while bit_iter_max < 24:
+                    while bit_iter_max < 24: #FIX THIS LATER
                         if n == 0:
                             current_red_color = format(int(red(img.pixels[pixel_iter])), '08b')
-                            print(current_red_color, "CHECKING")
                             current_potential_string += current_red_color[-1]
                         if n == 1:
                             current_green_color = format(int(green(img.pixels[pixel_iter])), '08b')
-                            print(current_green_color, "CHECKING")
                             current_potential_string += current_green_color[-1]
-                            
                         if n == 2:
                             current_blue_color = format(int(blue(img.pixels[pixel_iter])), '08b')
-                            print(current_blue_color, "CHECKING")
                             current_potential_string += current_blue_color[-1]
-                            
                         bit_iter_max += 1
                         bit_iter += 1 # we have attempted by adding one channel now
-                    if current_potential_string == '001100110100111001000100': 
+                    if current_potential_string == '001100110100111001000100': # FIX THIS LATER
                         delimiter_found = True
                     else:
                         current_potential_string = current_potential_string[1:]
+                        # we need to keep looking so chop off first bit of what we have
                         bit_iter_max -= 1
-                        # continue appending through other pixels one at a time
-                    pixel_iter += 1
-                    print(pixel_iter, "WHAT PIXEL WE ON")
-            
-            # assumes delimiter is present        
+                        # keep appending through other pixels one at a time
+                pixel_iter += 1
+            # assumes there is indeed a delimiter present
             print(bit_iter, 'OLD')
-            bit_iter -= 47 # bit_iter is now the location of where delimiter is
-            print(bit_iter, 'NEW')
+            bit_iter -= 47
+            print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
             secret_message = ""
+            bit_count = 0
+            pixel_iter = 0
             while bit_count < bit_iter:
                 for n in range(0,3):
                     if bit_count < bit_iter:
@@ -142,12 +136,10 @@ def LSB_extraction():
                             secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
                         if n == 2:
-                            secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
+                            secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
-                    pixel_iter += 1
+                pixel_iter += 1
             print(secret_message, "SHOULD BE OSIS")
-    
-
                 
 
 def LSB_mode():
