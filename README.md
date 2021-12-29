@@ -31,7 +31,7 @@ Finally finished debugging and implementing the LSB insertion hidden message emb
 Began work on implementing the color cycling algorithm; need to figure out a way to store all the 24 image variations.
 ### Dec 27, 2021 (Monday) (winter break ❄️)
 - **Katherine** 🧊  
-Worked on LSB extraction method for decoding an image with a message embedded in it. Edited LSB insertion function to add a string to the end of the message to identify the end of the embedded message and to save the new image to use for testing extraction.
+Edited LSB insertion function to add a string to the end of the message to identify the end of the embedded message and to save the new image to use for testing extraction. Started LSB extraction method for decoding an image with a message embedded in it. Extracted the LSB from each pixel in the whole image before looking for the delimiter string. 
 - **Rickey** 🌪️  
 Successfully implemented the color cycling mode. Tested the algorithm on the dark.png file from Task 16 in THM CTF Collection Vol 1, and it worked; generated 24 image variations, two of them showing the flag, just like how Aperisolve (an online web tool) did. However, while Aperisolve had some more color, these images were purely black and white. Will try to look into that more and will try to utilize the UiBooster gallery photo feature.
 ### Dec 28, 2021 (Tuesday) (winter break ❄️)
@@ -39,3 +39,6 @@ Successfully implemented the color cycling mode. Tested the algorithm on the dar
 Worked on debugging LSB extraction method. Noticed extracted bits did not include the limiter added. Since the limiter string is not found, the function concludes that there is no hidden message found. 
 - **Rickey** 🌪️  
 Did more research on new algorithms / steganography techniques and brainstormed on what to implement next for our tool, such as masking + filtering and randomized LSB.
+### Dec 29, 2021 (Wednesday) (winter break ❄️)
+- **Katherine** 🧊 &  **Rickey** 🌪️  
+Sucessfully implemented LSB extraction mode where an image that has been processed with our tool and contains a hidden message is inputted by a user. Fixed bugs over a 3 hour zoom call. Found out that if statements initially used to help debug were causing the extraction to end prematurely, meaning the delimiter was never even extracted. Decided to change the logic by using while loop that looks for the delimiter in batches sized of its binary length. Every batch is checked to see if matches the delmiter. If not matched,a new batch is extracted and chekced and so on. The hidden message is returned as a binary string. Sucessfuly tested on messages containing whitespaces. 
