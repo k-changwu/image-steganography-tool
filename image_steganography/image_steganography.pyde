@@ -74,11 +74,7 @@ def color_cycling_mode():
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
     new_binary_color += bit_of_string
-    return new_binary_color
-
-def LSB_extraction_helper(new_binary_color):
-    bit = new_binary_color[-1]
-    return bit        
+    return new_binary_color 
 
 def LSB_extraction():
     #01101111011100110110100101110011 IS RED.PNG OSIS 
@@ -139,7 +135,7 @@ def LSB_extraction():
                             secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
                             bit_count += 1
                 pixel_iter += 1
-            print(secret_message, "SHOULD BE OSIS")
+            print(secret_message, "IS THE HIDDEN MESSAGE!")
                 
 
 def LSB_mode():
