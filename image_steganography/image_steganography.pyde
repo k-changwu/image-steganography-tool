@@ -116,26 +116,29 @@ def LSB_extraction():
                         # keep appending through other pixels one at a time
                 pixel_iter += 1
             # assumes there is indeed a delimiter present
-            print(bit_iter, 'OLD')
-            bit_iter -= 47
-            print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
-            secret_message = ""
-            bit_count = 0
-            pixel_iter = 0
-            while bit_count < bit_iter:
-                for n in range(0,3):
-                    if bit_count < bit_iter:
-                        if n == 0:
-                            secret_message += (format(int(red(img.pixels[pixel_iter])), '08b'))[-1]
-                            bit_count += 1
-                        if n == 1:
-                            secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
-                            bit_count += 1
-                        if n == 2:
-                            secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
-                            bit_count += 1
-                pixel_iter += 1
-            print(secret_message, "IS THE HIDDEN MESSAGE!")
+            if delimiter_found:
+                print(bit_iter, 'OLD')
+                bit_iter -= 47
+                print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
+                secret_message = ""
+                bit_count = 0
+                pixel_iter = 0
+                while bit_count < bit_iter:
+                    for n in range(0,3):
+                        if bit_count < bit_iter:
+                            if n == 0:
+                                secret_message += (format(int(red(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                            if n == 1:
+                                secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                            if n == 2:
+                                secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                    pixel_iter += 1
+                print(secret_message, "IS THE HIDDEN MESSAGE!")
+            else:
+                print("NO HIDDEN MESSAGE FOUND")
                 
 
 def LSB_mode():
