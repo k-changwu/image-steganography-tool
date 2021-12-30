@@ -106,7 +106,6 @@ def LSB_insertion(old_binary_color, bit_of_string):
     return new_binary_color 
 
 def LSB_extraction():
-    #01101111011100110110100101110011 IS RED.PNG OSIS 
     global booster
     if keyPressed == True:
         selected_image_file = booster.showFileSelection()
@@ -184,15 +183,7 @@ def LSB_mode():
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             # dialog = UiBooster().showWaitingDialog("Starting", "Please wait");
             # dialog.setMessage("Ready");
-            #message_with_limit = message + "3nD" #so we know where the end for decoding is
             message += "3ND" 
-            # ARE MESSAGES LIMITED TO ASCII????
-            message_bytes = message.encode("ascii")
-            #print(message_bytes, "ENCODE ASCII")
-            base64_bytes = base64.b64encode(message_bytes)
-            #print(base64_bytes, "ENCODE BASE64")
-            base64_message = base64_bytes.decode("ascii")
-            #print(base64_message, "DECODE ASCII")
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             print(binary_string + " is what we tryna embed")
             print(red(pixels[0])) # SHOULD BE 255 ish
