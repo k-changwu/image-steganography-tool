@@ -105,7 +105,32 @@ def LSB_random_insertion():
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             
             seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
-            
+            # an int from 100 to 999
+            # inject random with that seed
+            random.seed(seed)
+            # PSUEDOCODE
+            # convert that 3 digit number which is the seed into binary string
+            # add 3ND to that
+            # embed it within the top left corner
+            # now, the top left corner pixels are rendered useless / unavailable for
+            # embedding our "osis" message
+            # so store those top left corner pixels into a list called
+            # "list_of_pixels_that_are_unavailable"
+            # now for the embedding,
+            # LOOOOOP iterate thorugh the binary string of <osis3nd>
+                # LOOOP for i in range(0,2):
+                    # use the seed to generate a random number from [0, 1)
+                    # if i == 0, handle the width, convert [0,1) to x-cor using mathgick
+                    # else, handle the height, convert to y-cor using mathgick
+                # CHECK IF (x-cor, y-cor) is NOT IN LOPTAU:
+                    # embed 3/2/1 bits of binary string of <osis3nd> into that pixel
+                    # ADD THAT PIXEL into LOPTAU
+                    # now that we've added 1/2/3 bits of binary sting of osis3nd,
+                    # iterate the LOOOOP accordingly 
+                # else: generate another (x,y) coord pair, we didn't add bits
+                # of binary string, so don't iteate LOOOOOP
+            # once the LOOOOP ends, that means all of osis3nd was embedded into it
+            print("DONE WITH RANDOMIZED LSB")
             
 def LSB_extraction():
     global booster
