@@ -1,4 +1,5 @@
 import base64
+import os
 add_library('UiBooster')
 booster = UiBooster()
 
@@ -10,6 +11,7 @@ def draw():
     color_cycling_mode()
     #LSB_mode()
     #LSB_extraction()
+    #LSB_random_insertion
 
 def start():
     global booster
@@ -70,41 +72,34 @@ def color_cycling_mode():
                     # if that bit value is 0, set that pixel in new image to white
                     # else, black
                 # save newImage
-            list_of_pictures = [
-                                open("color_cycling_variants/image_variation_0.png"),
-                                open("color_cycling_variants/image_variation_1.png"),
-                                open("color_cycling_variants/image_variation_2.png"),
-                                open("color_cycling_variants/image_variation_3.png"),
-                                open("color_cycling_variants/image_variation_4.png"),
-                                open("color_cycling_variants/image_variation_5.png"),
-                                open("color_cycling_variants/image_variation_6.png"),
-                                open("color_cycling_variants/image_variation_7.png"),
-                                open("color_cycling_variants/image_variation_8.png"),
-                                open("color_cycling_variants/image_variation_9.png"),
-                                open("color_cycling_variants/image_variation_10.png"),
-                                open("color_cycling_variants/image_variation_11.png"),
-                                open("color_cycling_variants/image_variation_12.png"),
-                                open("color_cycling_variants/image_variation_13.png"),
-                                open("color_cycling_variants/image_variation_14.png"),
-                                open("color_cycling_variants/image_variation_15.png"),
-                                open("color_cycling_variants/image_variation_16.png"),
-                                open("color_cycling_variants/image_variation_17.png"),
-                                open("color_cycling_variants/image_variation_18.png"),
-                                open("color_cycling_variants/image_variation_19.png"),
-                                open("color_cycling_variants/image_variation_20.png"),
-                                open("color_cycling_variants/image_variation_21.png"),
-                                open("color_cycling_variants/image_variation_22.png"),
-                                open("color_cycling_variants/image_variation_23.png")
-                                ]
+            path = "./color_cycling_variants/"
+            pngs = [os.path.join(path, file)
+                    for file in os.listdir(path)
+                    if file.endswith(".png")]
+
+            
+            
             booster.showPictures(
                 "Image Color Cycling Variations",
-                list_of_pictures)
+                pngs)
 
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
     new_binary_color += bit_of_string
     return new_binary_color 
 
+def LSB_random_insertion():
+    global booster
+    if keyPressed == True:
+        selected_image_file = booster.showFileSelection()
+        if selected_image_file != None:
+            pathToImage = selected_image_file.getAbsolutePath()
+            img = loadImage(pathToImage)
+            image(img, 0, 0)
+            loadPixels()
+            print("BEGIN RANDOM INSERTION")
+            
+            
 def LSB_extraction():
     global booster
     if keyPressed == True:
