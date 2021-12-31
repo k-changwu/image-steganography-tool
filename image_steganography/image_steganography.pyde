@@ -1,5 +1,6 @@
 import base64
 import os
+import random
 add_library('UiBooster')
 booster = UiBooster()
 
@@ -98,6 +99,12 @@ def LSB_random_insertion():
             image(img, 0, 0)
             loadPixels()
             print("BEGIN RANDOM INSERTION")
+            
+            message = UiBooster().showTextInputDialog("What message do you want to hide?")
+            message +=  "3ND"
+            binary_string = ''.join(format(ord(x), '08b') for x in message)
+            
+            seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
             
             
 def LSB_extraction():
