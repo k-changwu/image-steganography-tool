@@ -11,9 +11,11 @@ def setup():
 def draw():
     #color_cycling_mode()
     #LSB_mode()
-    #LSB_extraction()
-    LSB_random_insertion()
-
+    LSB_extraction()
+    #LSB_random_insertion()
+# ('0110100001101001001100110100111001000100', 'THIS IS WHAT WE EMBEDDING')
+# (868, 'THIS IS THE SEED')
+# ('001110000011011000111000001100110100111001000100', 'SEED + 3ND')
 def start():
     global booster
     if keyPressed == True:
@@ -78,8 +80,6 @@ def color_cycling_mode():
                     for file in os.listdir(path)
                     if file.endswith(".png")]
 
-            
-            
             booster.showPictures(
                 "Image Color Cycling Variations",
                 pngs)
@@ -114,7 +114,7 @@ def LSB_random_insertion():
             random.seed(seed)
             seed_string = str(seed) + "3ND" 
             seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
-            # print(seed_binary, "SEED + 3ND")
+            print(seed_binary, "SEED + 3ND")
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
             newImage.loadPixels()
@@ -133,6 +133,7 @@ def LSB_random_insertion():
                         # print(i, "WHERE WE AT")
                         if i < len(seed_binary):
                             list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
+                            print(list_of_unavailable_pixels, "SHOULD ALL BE TOP LEFT")
                             if n == 0:
                                 #print(x, "is the x value where we at")
                                 #print(y, "is the y value where we at")
@@ -148,6 +149,9 @@ def LSB_random_insertion():
                                 # print(y, "is the y value where we at")                                    
                                 blueCInBinary = LSB_insertion(blueCInBinary, seed_binary[i])
                                 i += 1
+                    newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                    newImage_iter += 1
+                newImage.updatePixels()
             print("DONE W/ SEED EMBED")
             bit_iter = 0
             xcor = 0
@@ -194,11 +198,13 @@ def LSB_random_insertion():
                                 blueCInBinary = LSB_insertion(blueCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
                                 print(blueCInBinary, "BLUE POST-MOD")
-                        list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
-                    newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    newImage_iter += 1
+                            list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
+                    # newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                    # newImage_iter += 1
+                    new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                    newImage.set(potential_coord[0], potential_coord[1], new_colour)
                 newImage.updatePixels()
-                newImage.save("Encoded_Image.PNG")
+                newImage.save("Encoded_Random_Image.PNG")
                 print(bit_iter, "SHUOLD BE 32")
             # PSUEDOCODE
             # convert that 3 digit number which is the seed into binary string
