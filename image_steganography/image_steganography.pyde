@@ -108,6 +108,33 @@ def LSB_random_insertion():
             # an int from 100 to 999
             # inject random with that seed
             random.seed(seed)
+            seed_string = str(seed) + "3ND"
+            seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) 
+          
+                
+            for y in range(0, img.height):
+                for x in range(0, img.width):  
+                    colour = get(x,y)
+                    redC = int(red(colour))
+                    greenC = int(green(colour))
+                    blueC = int(blue(colour))
+                    redCInBinary = format(redC, '08b')
+                    greenCInBinary = format(greenC, '08b')
+                    blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            # print(i, "WHERE WE AT")
+                            # print(len(binary_string), "LENGTH OF BSTRING")
+                            if i < len(seed_binary):
+                                if n == 0:
+                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 1:
+                                    if x <= 10 and y == 0:
+                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 2:
+                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                    i += 1
             # PSUEDOCODE
             # convert that 3 digit number which is the seed into binary string
             # add 3ND to that
