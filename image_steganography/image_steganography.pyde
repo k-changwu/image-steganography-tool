@@ -129,20 +129,28 @@ def LSB_random_insertion():
                             if i < len(seed_binary):
                                 list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
                                 if n == 0:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")
                                     redCInBinary = LSB_insertion(redCInBinary, seed_string[i])
                                     i += 1
                                 if n == 1:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")                                    
                                     greenCInBinary = LSB_insertion(greenCInBinary, seed_string[i])
                                     i += 1
                                 if n == 2:
+                                    print(x, "is the x value where we at")
+                                    print(y, "is the y value where we at")                                    
                                     blueCInBinary = LSB_insertion(blueCInBinary, seed_string[i])
                                     i += 1
-            pixel_used = False
-            for bit in binary_string:
+            bit_iter = 0
+            rando_gen_iter = 0
+            xcor = 0
+            ycor = 0
+            while bit_iter < len(binary_string):
                 for i in range(0,2):
-                    xcor = 0
-                    ycor = 0
                     rando = random.random()
+                    rando_gen_iter += 1
                     if i == 0: 
                         xcor = floor(rando * img.width)
                         i+=1
@@ -155,17 +163,32 @@ def LSB_random_insertion():
                             # print(i, "WHERE WE AT")
                             if i < len(string_binary):
                                 if n == 0:
+                                    print(xcor, "is the x value where we at")
+                                    print(ycor, "is the y value where we at")                                    
                                     redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
                                     i += 1
+                                    bit_iter+=1
                                 if n == 1:
+                                    print(xcor, "is the x value where we at")
+                                    print(ycor, "is the y value where we at")                                    
                                     greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
                                     i += 1
+                                    bit_iter+=1
                                 if n == 2:
+                                    print(xcor, "is the x value where we at")
+                                    print(ycor, "is the y value where we at")                                    
                                     blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
                                     i += 1
-                         list_of_unavailable_pixels.append((xcor,ycor)) # IF WE EMBEDDING, PIXEL IS USED                            
+                                    bit_iter+=1
+                            list_of_unavailable_pixels.append((xcor,ycor)) # IF WE EMBEDDING, PIXEL IS USED
+                            newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                            newImage_iter += 1
+                         
+                else:
+                    # else: generate another (x,y) coord pair, we didn't add bits
+                    # of binary string, so don't iteate LOOOOOP                           
                     
-                
+                newImage.updatePixels()
             # PSUEDOCODE
             # convert that 3 digit number which is the seed into binary string
             # add 3ND to that
