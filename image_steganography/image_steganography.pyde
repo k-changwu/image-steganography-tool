@@ -110,10 +110,11 @@ def LSB_random_insertion():
             random.seed(seed)
             seed_string = str(seed) + "3ND"
             seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) 
-          
-                
+            if (len(seed_binary) > img.width * img.height * 3):
+                print("ERROR: LARGER FILE SIZE NEEDED")
+            list_of_unavailable_pixels = []
             for y in range(0, img.height):
-                for x in range(0, img.width):  
+                for x in range(0, img.width): 
                     colour = get(x,y)
                     redC = int(red(colour))
                     greenC = int(green(colour))
@@ -123,13 +124,12 @@ def LSB_random_insertion():
                     blueCInBinary = format(blueC, '08b')
                         for n in range(0,3):
                             # print(i, "WHERE WE AT")
-                            # print(len(binary_string), "LENGTH OF BSTRING")
                             if i < len(seed_binary):
+                                list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
                                 if n == 0:
                                     redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
                                     i += 1
                                 if n == 1:
-                                    if x <= 10 and y == 0:
                                     greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
                                     i += 1
                                 if n == 2:
