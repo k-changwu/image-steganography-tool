@@ -157,32 +157,32 @@ def LSB_random_insertion():
                     else:
                         ycor = floor(rando * img.height)
                         i+=1
-                if xcor not in list_of_unavailable_pixels:
-                    if ycor not in list_of_unavailable_pixels:
-                        for n in range(0,3):
-                            # print(i, "WHERE WE AT")
-                            if i < len(string_binary):
-                                if n == 0:
-                                    print(xcor, "is the x value where we at")
-                                    print(ycor, "is the y value where we at")                                    
-                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
-                                    i += 1
-                                    bit_iter+=1
-                                if n == 1:
-                                    print(xcor, "is the x value where we at")
-                                    print(ycor, "is the y value where we at")                                    
-                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
-                                    i += 1
-                                    bit_iter+=1
-                                if n == 2:
-                                    print(xcor, "is the x value where we at")
-                                    print(ycor, "is the y value where we at")                                    
-                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
-                                    i += 1
-                                    bit_iter+=1
-                            list_of_unavailable_pixels.append((xcor,ycor)) # IF WE EMBEDDING, PIXEL IS USED
-                            newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                            newImage_iter += 1
+                potential_coord = (xcor, ycor)
+                if potential_coord not in list_of_unavailable_pixels:
+                    for n in range(0,3):
+                        # print(i, "WHERE WE AT")
+                        if i < len(string_binary):
+                            if n == 0:
+                                print(xcor, "is the x value where we at")
+                                print(ycor, "is the y value where we at")                                    
+                                redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                i += 1
+                                bit_iter+=1
+                            if n == 1:
+                                print(xcor, "is the x value where we at")
+                                print(ycor, "is the y value where we at")                                    
+                                greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                i += 1
+                                bit_iter+=1
+                            if n == 2:
+                                print(xcor, "is the x value where we at")
+                                print(ycor, "is the y value where we at")                                    
+                                blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                i += 1
+                                bit_iter+=1
+                        list_of_unavailable_pixels.append((xcor,ycor)) # IF WE EMBEDDING, PIXEL IS USED
+                        newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                        newImage_iter += 1
                          
                 else:
                     # else: generate another (x,y) coord pair, we didn't add bits
