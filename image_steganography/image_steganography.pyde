@@ -9,10 +9,10 @@ def setup():
     background(color(37, 37, 38))
 
 def draw():
-    color_cycling_mode()
+    #color_cycling_mode()
     #LSB_mode()
     #LSB_extraction()
-    #LSB_random_insertion
+    LSB_random_insertion
 
 def start():
     global booster
@@ -129,13 +129,13 @@ def LSB_random_insertion():
                             if i < len(seed_binary):
                                 list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
                                 if n == 0:
-                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                    redCInBinary = LSB_insertion(redCInBinary, seed_string[i])
                                     i += 1
                                 if n == 1:
-                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                    greenCInBinary = LSB_insertion(greenCInBinary, seed_string[i])
                                     i += 1
                                 if n == 2:
-                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                    blueCInBinary = LSB_insertion(blueCInBinary, seed_string[i])
                                     i += 1
             pixel_used = False
             for bit in binary_string:
@@ -151,8 +151,19 @@ def LSB_random_insertion():
                         i+=1
                 if xcor not in list_of_unavailable_pixels:
                     if ycor not in list_of_unavailable_pixels:
-                        list_of_unvailable_pixels.append((xcor,ycor))
-                            
+                        for n in range(0,3):
+                            # print(i, "WHERE WE AT")
+                            if i < len(string_binary):
+                                if n == 0:
+                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 1:
+                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 2:
+                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                    i += 1
+                         list_of_unavailable_pixels.append((xcor,ycor)) # IF WE EMBEDDING, PIXEL IS USED                            
                     
                 
             # PSUEDOCODE
