@@ -103,15 +103,17 @@ def LSB_random_insertion():
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
-            
+            if (len(binary_string) > img.width * img.height * 3):  # when img too small for msg 
+                print("ERROR: LARGER FILE SIZE NEEDED")
+                
             seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
             # an int from 100 to 999
             # inject random with that seed
             random.seed(seed)
-            seed_string = str(seed) + "3ND"
-            seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) 
-            if (len(seed_binary) > img.width * img.height * 3):
-                print("ERROR: LARGER FILE SIZE NEEDED")
+            seed_string = str(seed) + "3ND" 
+            seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
+            # print(seed_binary, "SEED + 3ND")
+           
             list_of_unavailable_pixels = []
             for y in range(0, img.height):
                 for x in range(0, img.width): 
@@ -135,6 +137,24 @@ def LSB_random_insertion():
                                 if n == 2:
                                     blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
                                     i += 1
+            pixel_used = False
+            for bit in binary_string:
+                for i in range(0,2):
+                    xcor = 0
+                    ycor = 0
+                    rando = random.random()
+                    if i == 0: 
+                        xcor = floor(rando * img.width)
+                        i+=1
+                    else:
+                        ycor = floor(rando * img.height)
+                        i+=1
+                if xcor not in list_of_unavailable_pixels:
+                    if ycor not in list_of_unavailable_pixels:
+                        list_of_unvailable_pixels.append((xcor,ycor))
+                            
+                    
+                
             # PSUEDOCODE
             # convert that 3 digit number which is the seed into binary string
             # add 3ND to that
