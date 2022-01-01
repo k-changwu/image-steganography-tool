@@ -107,13 +107,16 @@ def LSB_random_insertion():
                 print("ERROR: LARGER FILE SIZE NEEDED")
                 
             seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
+            print(seed, "THIS IS THE SEED")
             # an int from 100 to 999
             # inject random with that seed
             random.seed(seed)
             seed_string = str(seed) + "3ND" 
             seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
             # print(seed_binary, "SEED + 3ND")
-           
+            newImage_iter = 0
+            newImage = createImage(img.width, img.height, RGB)
+            newImage.loadPixels()
             list_of_unavailable_pixels = []
             for y in range(0, img.height):
                 for x in range(0, img.width): 
@@ -144,14 +147,12 @@ def LSB_random_insertion():
                                     blueCInBinary = LSB_insertion(blueCInBinary, seed_string[i])
                                     i += 1
             bit_iter = 0
-            rando_gen_iter = 0
             xcor = 0
             ycor = 0
             while bit_iter < len(binary_string):
-                
                 for i in range(0,2):
                     rando = random.random()
-                    rando_gen_iter += 1
+                    
                     if i == 0: 
                         xcor = floor(rando * img.width)
                         i+=1
@@ -160,6 +161,7 @@ def LSB_random_insertion():
                         i+=1
                 potential_coord = (xcor, ycor)
                 if potential_coord not in list_of_unavailable_pixels:
+                    print(potential_coord, "THIS IS THE COORD")
                     colour = get(potential_coord[0],potential_coord[1])
                     redC = int(red(colour))
                     greenC = int(green(colour))
@@ -170,28 +172,29 @@ def LSB_random_insertion():
                     for n in range(0,3):
                         if bit_iter < len(string_binary):
                             if n == 0:
+                                print(redCInBinary, "RED PRE-MOD")
                                 print(potential_coord[0], "is the x value where we at")
                                 print(potential_coord[1], "is the y value where we at")                                    
                                 redCInBinary = LSB_insertion(redCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
+                                print(redCInBinary, "RED POST-MOD")
                             if n == 1:
+                                print(greenCInBinary, "GREEN PRE-MOD")
                                 print(potential_coord[0], "is the x value where we at")
                                 print(potential_coord[1], "is the y value where we at")                                   
                                 greenCInBinary = LSB_insertion(greenCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
+                                print(greenCInBinary, "GREEN POST-MOD")
                             if n == 2:
+                                print(blueCInBinary, "BLUE PRE-MOD")
                                 print(potential_coord[0], "is the x value where we at")
                                 print(potential_coord[1], "is the y value where we at")                                    
                                 blueCInBinary = LSB_insertion(blueCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
+                                print(blueCInBinary, "BLUE POST-MOD")
                         list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
                     newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage_iter += 1
-                         
-                else:
-                    # else: generate another (x,y) coord pair, we didn't add bits
-                    # of binary string, so don't iteate LOOOOOP                           
-                    
                 newImage.updatePixels()
             # PSUEDOCODE
             # convert that 3 digit number which is the seed into binary string
