@@ -12,9 +12,9 @@ def setup():
 def draw():
     #color_cycling_mode()
     #LSB_mode()
-    #LSB_extraction()
+    LSB_extraction()
     #LSB_random_insertion()
-    LSB_random_extraction()
+    #LSB_random_extraction()
 
 def start():
     global booster
@@ -319,7 +319,7 @@ def LSB_random_extraction():
                             ycor = floor(rando * img.height)
                             i+=1
                     potential_coord = (xcor, ycor)
-                    if potential_coord not in list_of_unavailable_pixels:
+                    if potential_coord not in list_unavailable_pixels:
                         print(potential_coord, "THIS IS THE COORD")
                         colour = get(potential_coord[0],potential_coord[1])
                         redC = int(red(colour))
@@ -349,7 +349,7 @@ def LSB_random_extraction():
                                     break
                             list_unavailable_pixels.append(potential_coord)   
                 hidden_message_binary = potential_message[:-24]
-                hidden_message_binary = "0b" + hidden_message
+                hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
                 print(hidden_message, "HIDDEN MESSAGE")
@@ -447,7 +447,11 @@ def LSB_extraction():
                                 bit_count += 1
                     pixel_iter += 1
                 print(secret_message, "IS THE HIDDEN MESSAGE!")
-                return secret_message
+                hidden_message_binary = secret_message
+                hidden_message_binary = "0b" + hidden_message_binary
+                hidden_message_int = int(hidden_message_binary, 2)
+                hidden_message = binascii.unhexlify('%x' % hidden_message_int)
+                print(hidden_message, "HIDDEN MESSAGE")
             else:
                 print("NO HIDDEN MESSAGE FOUND")
                 
