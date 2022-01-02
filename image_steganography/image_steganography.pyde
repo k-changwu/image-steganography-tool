@@ -199,14 +199,12 @@ def LSB_random_insertion():
                                 bit_iter+=1
                                 print(blueCInBinary, "BLUE POST-MOD")
                             list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
-                    # newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    # newImage_iter += 1
                     new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage.set(potential_coord[0], potential_coord[1], new_colour)
                 newImage.updatePixels()
                 newImage.save("Encoded_Random_Image.PNG")
                 print(bit_iter, "SHUOLD BE 32")
-            # PSUEDOCODE
+            # PSEUDOCODE
             # convert that 3 digit number which is the seed into binary string
             # add 3ND to that
             # embed it within the top left corner
@@ -230,6 +228,25 @@ def LSB_random_insertion():
             # once the LOOOOP ends, that means all of osis3nd was embedded into it
             print("DONE WITH RANDOMIZED LSB") #685 SEED
             
+            # PSEUDOCODE
+            # extract seed from top left stopping when 3ND is found 
+            # add top left pixels seed was extracted from to LOPTAU
+            # convert seed binary to ASCII to int
+            # then use seed to generate coordinates and extract LSB from those pixels
+            # LOOP while delimiter not found
+              # generate random coord 
+              # do mathgick to get coordinates
+              # check if in LOPTAU
+                # if not in LOPTAU, 
+                   # extract 1/2/3 bits from that pixel & store into string
+                   # let's say 3ND in binary is x chars long
+                   # after extracting a bit from that pixel, attempt to see if string's last x chars equal to 3ND in binary
+                   # if true, then 3ND is found, break from loop
+                   # else keep extracting more bits
+                   # add to LOPTAU
+            # once the LOOP ends, that means all of message + 3ND is found 
+            
+                  
 def LSB_extraction():
     global booster
     if keyPressed == True:
