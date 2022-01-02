@@ -346,8 +346,13 @@ def LSB_random_extraction():
                                 potential_message += bit_extracted
                                 if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
                                     delimiter_found = True
-                                    break                    
-                     
+                                    break
+                            list_unavailable_pixels.append(potential_coord)   
+                hidden_message_binary = potential_message[:-24]
+                hidden_message_binary = "0b" + hidden_message
+                hidden_message_int = int(hidden_message_binary, 2)
+                hidden_message = binascii.unhexlify('%x' % hidden_message_int)
+                print(hidden_message, "HIDDEN MESSAGE")
             else:
                 print("NO SEED FOUND")
    
