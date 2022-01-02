@@ -1,6 +1,7 @@
 import base64
 import os
 import random
+import binascii
 add_library('UiBooster')
 booster = UiBooster()
 
@@ -11,11 +12,10 @@ def setup():
 def draw():
     #color_cycling_mode()
     #LSB_mode()
-    LSB_extraction()
+    #LSB_extraction()
     #LSB_random_insertion()
-# ('0110100001101001001100110100111001000100', 'THIS IS WHAT WE EMBEDDING')
-# (868, 'THIS IS THE SEED')
-# ('001110000011011000111000001100110100111001000100', 'SEED + 3ND')
+    LSB_random_extraction()
+
 def start():
     global booster
     if keyPressed == True:
@@ -229,7 +229,85 @@ def LSB_random_insertion():
             print("DONE WITH RANDOMIZED LSB") #685 SEED
 
 def LSB_random_extraction():
-   seed_binary = LSB_extraction()
+    global booster
+    if keyPressed == True:
+        selected_image_file = booster.showFileSelection()
+        if selected_image_file != None:
+            pathToImage = selected_image_file.getAbsolutePath()
+            img = loadImage(pathToImage)
+            image(img, 0, 0)
+            loadPixels()
+            print("BEGIN EXTRACTING")
+            delimiter_found = False
+            location_of_delimiter = 0
+            pixel_iter = 0
+            bit_iter = 0
+            bit_iter_max = 0
+            current_potential_string = ""
+            while pixel_iter < len(img.pixels) and not delimiter_found:
+                for n in range(0,3):
+                    while bit_iter_max < 24: #FIX THIS LATER
+                        if n == 0:
+                            current_red_color = format(int(red(img.pixels[pixel_iter])), '08b')
+                            current_potential_string += current_red_color[-1]
+                        if n == 1:
+                            current_green_color = format(int(green(img.pixels[pixel_iter])), '08b')
+                            current_potential_string += current_green_color[-1]
+                        if n == 2:
+                            current_blue_color = format(int(blue(img.pixels[pixel_iter])), '08b')
+                            current_potential_string += current_blue_color[-1]
+                        bit_iter_max += 1
+                        bit_iter += 1 # we have attempted by adding one channel now
+                    if current_potential_string == '001100110100111001000100': # FIX THIS LATER
+                        delimiter_found = True
+                    else:
+                        current_potential_string = current_potential_string[1:]
+                        # we need to keep looking so chop off first bit of what we have
+                        bit_iter_max -= 1
+                        # keep appending through other pixels one at a time
+                pixel_iter += 1
+            # assumes there is indeed a delimiter present
+            if delimiter_found:
+                print(bit_iter, 'OLD')
+                bit_iter -= 47
+                print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
+                secret_message = ""
+                bit_count = 0
+                pixel_iter = 0
+                while bit_count < bit_iter:
+                    for n in range(0,3):
+                        if bit_count < bit_iter:
+                            if n == 0:
+                                secret_message += (format(int(red(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                            if n == 1:
+                                secret_message += (format(int(green(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                            if n == 2:
+                                secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
+                                bit_count += 1
+                    pixel_iter += 1
+                seed_binary = secret_message + '001100110100111001000100'
+                
+                end_pix = ceil(len(seed_binary)/3) 
+                pix_count = 0
+                list_unavailable_pixels = []
+                x = 0
+                y = 0
+                while y < img.height and pix_count < end_pix:
+                    while x < img.width and pix_count < end_pix:
+                        list_unavailable_pixels.append((x,y))
+                        pix_count += 1
+                        x += 1
+                    y += 1
+                # print(list_unavailable_pixels)
+                seed_convert = "0b" + secret_message
+                seed_int = int(seed_convert, 2)
+                seed_int = binascii.unhexlify('%x' % seed_int)
+                print(seed_int, "SEED AS AN INT??")
+                
+            else:
+                print("NO SEED FOUND")
    
                
             # PSEUDOCODE
@@ -237,7 +315,6 @@ def LSB_random_extraction():
             # add top left pixels seed was extracted from to LOPTAU
               # divide length of seed binary by 3 but ceiling it (rounding up)
               # now we have how many pixels the seed was inserted in
-              # subtract by 1 bc starting at 0
               # do mathgick with (y*width)+x to get individual coordinates to add to LOPTAU
               # pix_count to count number of pixels we adding 
               # while pix_count < 
