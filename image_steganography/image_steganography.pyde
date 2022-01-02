@@ -304,8 +304,50 @@ def LSB_random_extraction():
                 seed_convert = "0b" + secret_message
                 seed_int = int(seed_convert, 2)
                 seed_int = binascii.unhexlify('%x' % seed_int)
-                print(seed_int, "SEED AS AN INT??")
-                
+                seed_int = int(seed_int)
+                #print(seed_int, "SEED AS AN INT??")
+                delimiter_found = False
+                random.seed(seed_int) # inject random with seed 
+                potential_message = ""
+                while not delimiter_found:
+                    for i in range(0,2):
+                        rando = random.random()
+                        if i == 0: 
+                            xcor = floor(rando * img.width)
+                            i+=1
+                        else:
+                            ycor = floor(rando * img.height)
+                            i+=1
+                    potential_coord = (xcor, ycor)
+                    if potential_coord not in list_of_unavailable_pixels:
+                        print(potential_coord, "THIS IS THE COORD")
+                        colour = get(potential_coord[0],potential_coord[1])
+                        redC = int(red(colour))
+                        greenC = int(green(colour))
+                        blueC = int(blue(colour))
+                        redCInBinary = format(redC, '08b')
+                        greenCInBinary = format(greenC, '08b')
+                        blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            if n == 0:
+                                bit_extracted = redCInBinary[-1]
+                                potential_message += bit_extracted
+                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                    delimiter_found = True
+                                    break
+                            if n == 1:
+                                bit_extracted = greenCInBinary[-1]
+                                potential_message += bit_extracted
+                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                    delimiter_found = True
+                                    break
+                            if n == 2:
+                                bit_extracted = blueCInBinary[-1]
+                                potential_message += bit_extracted
+                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                    delimiter_found = True
+                                    break                    
+                     
             else:
                 print("NO SEED FOUND")
    
