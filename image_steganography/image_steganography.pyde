@@ -227,10 +227,26 @@ def LSB_random_insertion():
                 # of binary string, so don't iteate LOOOOOP
             # once the LOOOOP ends, that means all of osis3nd was embedded into it
             print("DONE WITH RANDOMIZED LSB") #685 SEED
-            
+
+def LSB_random_extraction():
+   seed_binary = LSB_extraction()
+   
+               
             # PSEUDOCODE
-            # extract seed from top left stopping when 3ND is found 
+            # extract seed from top left stopping when 3ND is found calling LSB_extraction method 
             # add top left pixels seed was extracted from to LOPTAU
+              # divide length of seed binary by 3 but ceiling it (rounding up)
+              # now we have how many pixels the seed was inserted in
+              # subtract by 1 bc starting at 0
+              # do mathgick with (y*width)+x to get individual coordinates to add to LOPTAU
+              # pix_count to count number of pixels we adding 
+              # while pix_count < 
+              # WHILE Y < IMG>HEIGHT AND while pix_count < num_of_pixels_that_were_affected_with_seed3ND
+                  # WHILE x < IMG.WIDTH AND while pix_count < num_of_pixels_that_were_affected_with_seed3ND
+                    # add (x,y) to LOPTAU
+                    # pix_count += 1
+                 # X+=1
+             # Y+=1
             # convert seed binary to ASCII to int
             # then use seed to generate coordinates and extract LSB from those pixels
             # LOOP while delimiter not found
@@ -307,6 +323,7 @@ def LSB_extraction():
                                 bit_count += 1
                     pixel_iter += 1
                 print(secret_message, "IS THE HIDDEN MESSAGE!")
+                return secret_message
             else:
                 print("NO HIDDEN MESSAGE FOUND")
                 
