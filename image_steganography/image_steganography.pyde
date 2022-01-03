@@ -16,15 +16,6 @@ def draw():
     #LSB_random_insertion()
     #LSB_random_extraction()
 
-def start():
-    global booster
-    if keyPressed == True:
-        selected_image_file = booster.showFileSelection()
-        if selected_image_file != None:
-            pathToImage = selected_image_file.getAbsolutePath()
-            img = loadImage(pathToImage)
-            image(img, 0, 0)
-
 def color_cycling_mode():
     global booster
     if keyPressed == True:
