@@ -10,9 +10,9 @@ def setup():
     background(color(37, 37, 38))
 
 def draw():
-    #color_cycling_mode()
+    color_cycling_mode()
     #LSB_mode()
-    LSB_extraction()
+    #LSB_extraction()
     #LSB_random_insertion()
     #LSB_random_extraction()
 
@@ -75,14 +75,19 @@ def color_cycling_mode():
                     # if that bit value is 0, set that pixel in new image to white
                     # else, black
                 # save newImage
-            path = "./color_cycling_variants/"
-            pngs = [os.path.join(path, file)
-                    for file in os.listdir(path)
-                    if file.endswith(".png")]
-
-            booster.showPictures(
-                "Image Color Cycling Variations",
-                pngs)
+            # path = os.path.abspath(os.getcwd())+"/color_cycling_variants/"
+            # # pngs = [os.path.join(path, file)
+            # #         for file in os.listdir(path)
+            # #         if file.endswith(".png")]
+            # for file in os.listdir(path):
+            #     print(file)
+            # # booster.showPictures(
+            # #     "Image Color Cycling Variations",
+            # #     pngs)
+            # pngs = [dataPath("/color_cycling_variants/image_variation_0.png")]
+            # booster.showPictures(
+            #         "IMG CCV",
+            #         pngs)
 
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
