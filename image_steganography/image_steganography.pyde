@@ -59,9 +59,9 @@ def color_cycling_mode():
                             new_image_iter += 1
                     new_image.save("color_cycling_variants/image_variation_"+str(image_id)+".png")
                     image_id += 1
-                    waiting.setMessage("Ready")
-                    waiting.close() 
-                    end = booster.showInfoDialog("Your image has successfully been processed! Please check the folder for your results!")
+            waiting.setMessage("Ready")
+            waiting.close() 
+            end = booster.showInfoDialog("Your image has successfully been processed! Please check the folder for your results!")
                     
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
