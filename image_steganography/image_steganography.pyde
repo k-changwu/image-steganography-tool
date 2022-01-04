@@ -6,7 +6,7 @@ add_library('UiBooster')
 booster = UiBooster()
 
 def setup():
-    size(1140, 820)
+    size(1642, 924)
     background(color(37, 37, 38))
 
 def draw():
@@ -24,7 +24,8 @@ def color_cycling_mode():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             img.loadPixels()
-            image(img, 0, 0)
+            imageMode(CENTER)
+            image(img, 821, 462)
             image_id = 0
             # for numbers from 0-7 (8 bits) called i
             for channel in range(0, 3):
@@ -92,8 +93,8 @@ def LSB_random_insertion():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            image(img, 0, 0)
-            loadPixels()
+            imageMode(CENTER)
+            image(img, 821, 462)
             print("BEGIN RANDOM INSERTION")
             
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
@@ -231,7 +232,8 @@ def LSB_random_extraction():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            image(img, 0, 0)
+            imageMode(CENTER)
+            image(img, 821, 462)
             loadPixels()
             print("BEGIN EXTRACTING")
             delimiter_found = False
@@ -390,7 +392,8 @@ def LSB_extraction():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            image(img, 0, 0)
+            imageMode(CENTER)
+            image(img, 821, 462)
             loadPixels()
             print("BEGIN EXTRACTING")
             delimiter_found = False
@@ -459,7 +462,8 @@ def LSB_mode():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            image(img, 0, 0)
+            imageMode(CENTER)
+            image(img, 821, 462)
             loadPixels()
             # #selection = UiBooster().showConfirmDialog("Would you like to embed a message?", "Are you sure?", () -> print("Action accepted"), () -> print("Action declined"))
             # #if selection == "Yes":
