@@ -94,24 +94,19 @@ def LSB_random_insertion():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             imageMode(CENTER)
-            image(img, 821, 462)
-            print("BEGIN RANDOM INSERTION")
-            
+            image(img, 821, 462)            
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
-            print(binary_string, "THIS IS WHAT WE EMBEDDING")
             if (len(binary_string) > img.width * img.height * 3):  # when img too small for msg 
                 print("ERROR: LARGER FILE SIZE NEEDED")
-                
+
             seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
-            print(seed, "THIS IS THE SEED")
             # an int from 100 to 999
             # inject random with that seed
             random.seed(seed)
             seed_string = str(seed) + "3ND" 
             seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
-            print(seed_binary, "SEED + 3ND")
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
             newImage.loadPixels()
@@ -130,26 +125,18 @@ def LSB_random_insertion():
                         # print(i, "WHERE WE AT")
                         if i < len(seed_binary):
                             list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
-                            print(list_of_unavailable_pixels, "SHOULD ALL BE TOP LEFT")
                             if n == 0:
-                                #print(x, "is the x value where we at")
-                                #print(y, "is the y value where we at")
                                 redCInBinary = LSB_insertion(redCInBinary, seed_binary[i])
                                 i += 1
-                            if n == 1:
-                                # print(x, "is the x value where we at")
-                                # print(y, "is the y value where we at")                                    
+                            if n == 1:                                  
                                 greenCInBinary = LSB_insertion(greenCInBinary, seed_binary[i])
                                 i += 1
-                            if n == 2:
-                                # print(x, "is the x value where we at")
-                                # print(y, "is the y value where we at")                                    
+                            if n == 2:                                  
                                 blueCInBinary = LSB_insertion(blueCInBinary, seed_binary[i])
                                 i += 1
                     newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage_iter += 1
                 newImage.updatePixels()
-            print("DONE W/ SEED EMBED")
             bit_iter = 0
             xcor = 0
             ycor = 0
@@ -164,7 +151,6 @@ def LSB_random_insertion():
                         i+=1
                 potential_coord = (xcor, ycor)
                 if potential_coord not in list_of_unavailable_pixels:
-                    print(potential_coord, "THIS IS THE COORD")
                     colour = get(potential_coord[0],potential_coord[1])
                     redC = int(red(colour))
                     greenC = int(green(colour))
@@ -174,56 +160,21 @@ def LSB_random_insertion():
                     blueCInBinary = format(blueC, '08b')
                     for n in range(0,3):
                         if bit_iter < len(binary_string):
-                            if n == 0:
-                                print(redCInBinary, "RED PRE-MOD")
-                                print(potential_coord[0], "is the x value where we at")
-                                print(potential_coord[1], "is the y value where we at")                                    
+                            if n == 0:                                
                                 redCInBinary = LSB_insertion(redCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
-                                print(redCInBinary, "RED POST-MOD")
-                            if n == 1:
-                                print(greenCInBinary, "GREEN PRE-MOD")
-                                print(potential_coord[0], "is the x value where we at")
-                                print(potential_coord[1], "is the y value where we at")                                   
+                            if n == 1:                                  
                                 greenCInBinary = LSB_insertion(greenCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
-                                print(greenCInBinary, "GREEN POST-MOD")
-                            if n == 2:
-                                print(blueCInBinary, "BLUE PRE-MOD")
-                                print(potential_coord[0], "is the x value where we at")
-                                print(potential_coord[1], "is the y value where we at")                                    
+                            if n == 2:                                  
                                 blueCInBinary = LSB_insertion(blueCInBinary, binary_string[bit_iter])
                                 bit_iter+=1
-                                print(blueCInBinary, "BLUE POST-MOD")
                             list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
                     new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage.set(potential_coord[0], potential_coord[1], new_colour)
                 newImage.updatePixels()
                 newImage.save("Encoded_Random_Image.PNG")
-                print(bit_iter, "SHUOLD BE 32")
-            # PSEUDOCODE
-            # convert that 3 digit number which is the seed into binary string
-            # add 3ND to that
-            # embed it within the top left corner
-            # now, the top left corner pixels are rendered useless / unavailable for
-            # embedding our "osis" message
-            # so store those top left corner pixels into a list called
-            # "list_of_pixels_that_are_unavailable"
-            # now for the embedding,
-            # LOOOOOP iterate thorugh the binary string of <osis3nd>
-                # LOOOP for i in range(0,2):
-                    # use the seed to generate a random number from [0, 1)
-                    # if i == 0, handle the width, convert [0,1) to x-cor using mathgick
-                    # else, handle the height, convert to y-cor using mathgick
-                # CHECK IF (x-cor, y-cor) is NOT IN LOPTAU:
-                    # embed 3/2/1 bits of binary string of <osis3nd> into that pixel
-                    # ADD THAT PIXEL into LOPTAU
-                    # now that we've added 1/2/3 bits of binary sting of osis3nd,
-                    # iterate the LOOOOP accordingly 
-                # else: generate another (x,y) coord pair, we didn't add bits
-                # of binary string, so don't iteate LOOOOOP
-            # once the LOOOOP ends, that means all of osis3nd was embedded into it
-            print("DONE WITH RANDOMIZED LSB") #685 SEED
+            print("DONE WITH RANDOMIZED LSB")
 
 def LSB_random_extraction():
     global booster
