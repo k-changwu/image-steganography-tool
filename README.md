@@ -56,3 +56,8 @@ Sucessfully finished implementing randomized LSB insertion after debugging over 
 ### Jan 2, 2022 (Sunday) (winter break ❄️)
 - **Katherine** 🧊 &  **Rickey** 🌪️  
 Successfully finished devising and implementing randomized LSB extraction method together over Zoom. Came across but later fixed a critical bug where the pixels where the seed was located weren't being added into the list of unavilable pixels tracker. Also finally converted the extracted messages from all the modes from binary to ASCII text.
+### Jan 3, 2022 (Monday)
+**Rickey** 🌪️  
+Centered images. Edited code to integrate all parts of project together. Cleaned code.
+- **Katherine** 🧊 &  
+Fixed uploading image error for regualr LSB insertion. Added info, error, and waiting dialogs. 
