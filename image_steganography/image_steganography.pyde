@@ -1,5 +1,4 @@
 import base64
-import os
 import random
 import binascii
 add_library('UiBooster')
@@ -8,6 +7,7 @@ booster = UiBooster()
 def setup():
     size(1642, 924)
     background(color(37, 37, 38))
+    start = booster.showInfoDialog("Hello there! Welcome to our image steganography tool! Please read below to find the key commands: \n Key 'M' or 'm' for standard LSB insertion function \n Key 'R' or 'r' for randomized LSB insertion function \n Key 'L' or 'l' for standard LSB extraction function \n Key 'E' or 'e' for randomized LSB extraction function \n  Key 'C' or 'c' for color cycling tool function \n Please refer to our README for guidelines on usage. \n Have fun! ")
 
 def draw():
     color_cycling_mode()
@@ -59,14 +59,6 @@ def color_cycling_mode():
                             new_image_iter += 1
                     new_image.save("color_cycling_variants/image_variation_"+str(image_id)+".png")
                     image_id += 1
-                # newImage = empty image which will have pixels added to it
-                # focusing on red channel, for each pixel in the image
-                    # get the red value for that pixel
-                    # convert it to binary
-                    # get the 0th bit or 1st bit or 2nd depending on i
-                    # if that bit value is 0, set that pixel in new image to white
-                    # else, black
-                # save newImage
 
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
@@ -87,7 +79,8 @@ def LSB_random_insertion():
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             if (len(binary_string) > img.width * img.height * 3):  # when img too small for msg 
-                print("ERROR: LARGER FILE SIZE NEEDED")
+                #print("ERROR: LARGER FILE SIZE NEEDED")
+                error = booster.showErrorDialog("The file selected is too small for this message!", "ERROR")
 
             seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
             # an int from 100 to 999
@@ -162,7 +155,9 @@ def LSB_random_insertion():
                     newImage.set(potential_coord[0], potential_coord[1], new_colour)
                 newImage.updatePixels()
                 newImage.save("Encoded_Random_Image.PNG")
-            print("DONE WITH RANDOMIZED LSB")
+            #print("DONE WITH RANDOMIZED LSB")
+            end = booster.showInfoDialog("Your message has successfully been randomly hidden in your image!")
+            
 
 def LSB_random_extraction():
     global booster
@@ -284,9 +279,11 @@ def LSB_random_extraction():
                 hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
-                print(hidden_message, "HIDDEN MESSAGE")
+                #print(hidden_message, "HIDDEN MESSAGE")
+                end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
             else:
-                print("NO SEED FOUND")
+                #print("NO SEED FOUND")
+                end = booster.showInfoDialog("No secret message was found!")
                   
 def LSB_extraction():
     global booster
@@ -349,9 +346,11 @@ def LSB_extraction():
                 hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
-                print(hidden_message, "HIDDEN MESSAGE")
+                #print(hidden_message, "HIDDEN MESSAGE")
+                end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
             else:
-                print("NO HIDDEN MESSAGE FOUND")
+                #print("NO HIDDEN MESSAGE FOUND")
+                end = booster.showInfoDialog("No secret message was found!")
 
 def LSB_mode():
     global booster
@@ -363,12 +362,14 @@ def LSB_mode():
             imageMode(CENTER)
             image(img, 821, 462)
             loadPixels()
-            message = UiBooster().showTextInputDialog("What message do you want to hide?")
+            message = booster.showTextInputDialog("What message do you want to hide?")
+            waiting = booster.showWaitingDialog("Starting", "Please wait")
             message += "3ND" 
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             msg_len = len(binary_string)
             if (msg_len > img.width * img.height * 3):
-                print("ERROR: LARGER FILE SIZE NEEDED")
+                #print("ERROR: LARGER FILE SIZE NEEDED")
+                error = booster.showErrorDialog("The file selected is too small for this message!")
             i = 0
             newImage_iter = 0
             newImage = createImage(img.width, img.height, RGB)
@@ -395,7 +396,10 @@ def LSB_mode():
                                 i += 1
                     newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                     newImage_iter += 1
+            waiting.setMessage("Ready")
+            waiting.close()
             newImage.updatePixels()
-            image(newImage, 0, 0)
-            print("DONE WITH EMBEDDING")
+            image(img, 821, 462)
+            #print("DONE WITH EMBEDDING")
             newImage.save("Encoded_Image.PNG")
+            done = booster.showInfoDialog("Your message has been successfully hidden!")
