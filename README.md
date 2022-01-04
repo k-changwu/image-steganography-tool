@@ -12,6 +12,11 @@ We created our very own image steganography tool. It includes five features: lea
 3. Download the UiBooster library
 4. Install the Python extension for Processing
 5. Click the run button in the upper-left hand corner of Processing
+6. Press a key on the keyboard to utilize its corresponding function
+7. Upload the image you want to analyze/hide information in
+8. Wait for it to finish processing
+9. Once it finishes processing, either a dialog will appear revealing what the hidden message is or files will be saved to your file system in a directory within the sketch folder depending on what function you chose
+10. Exit the tool after each use; you may have to manually stop it using the stop button in the upper-left hand corner of the IDE if it keeps prompting for an image upload
 
 ## 📃 Development Log
 ### Dec 14, 2021 (Tuesday)
