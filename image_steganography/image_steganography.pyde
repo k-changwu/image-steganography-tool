@@ -358,10 +358,8 @@ def LSB_extraction():
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
                 waiting.setMessage("Ready")
                 waiting.close()
-                #print(hidden_message, "HIDDEN MESSAGE")
                 ends = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + '"')
             else:
-                #print("NO HIDDEN MESSAGE FOUND")
                 ends = booster.showInfoDialog("No secret message was found!")
 
 def LSB_mode():
