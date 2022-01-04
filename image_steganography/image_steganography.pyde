@@ -26,6 +26,7 @@ def color_cycling_mode():
             img.loadPixels()
             imageMode(CENTER)
             image(img, 821, 462)
+            waiting = booster.showWaitingDialog("Starting", "Please wait")            
             image_id = 0
             # for numbers from 0-7 (8 bits) called i
             for channel in range(0, 3):
@@ -59,7 +60,10 @@ def color_cycling_mode():
                             new_image_iter += 1
                     new_image.save("color_cycling_variants/image_variation_"+str(image_id)+".png")
                     image_id += 1
-
+                    waiting.setMessage("Ready")
+                    waiting.close() 
+                    end = booster.showInfoDialog("Your image has successfully been processed! Please check the folder for your results!")
+                    
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
     new_binary_color += bit_of_string
@@ -76,6 +80,7 @@ def LSB_random_insertion():
             image(img, 821, 462)
             loadPixels()
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
+            waiting = booster.showWaitingDialog("Starting", "Please wait")            
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             if (len(binary_string) > img.width * img.height * 3):  # when img too small for msg 
@@ -152,10 +157,12 @@ def LSB_random_insertion():
                                 bit_iter+=1
                             list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
                     new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    newImage.set(potential_coord[0], potential_coord[1], new_colour)
+                    newImage.set(potential_coord[0], potential_coord[1], new_colour)                
                 newImage.updatePixels()
                 newImage.save("Encoded_Random_Image.PNG")
             #print("DONE WITH RANDOMIZED LSB")
+            waiting.setMessage("Ready")
+            waiting.close() 
             end = booster.showInfoDialog("Your message has successfully been randomly hidden in your image!")
             
 
@@ -169,6 +176,7 @@ def LSB_random_extraction():
             imageMode(CENTER)
             image(img, 821, 462)
             loadPixels()
+            waiting = booster.showWaitingDialog("Starting", "Please wait")
             delimiter_found = False
             location_of_delimiter = 0
             pixel_iter = 0
@@ -279,6 +287,8 @@ def LSB_random_extraction():
                 hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
+                waiting.setMessage("Ready")
+                waiting.close()                
                 #print(hidden_message, "HIDDEN MESSAGE")
                 end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
             else:
@@ -295,6 +305,7 @@ def LSB_extraction():
             imageMode(CENTER)
             image(img, 821, 462)
             loadPixels()
+            waiting = booster.showWaitingDialog("Starting", "Please wait")
             delimiter_found = False
             location_of_delimiter = 0
             pixel_iter = 0
@@ -346,6 +357,8 @@ def LSB_extraction():
                 hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
+                waiting.setMessage("Ready")
+                waiting.close()
                 #print(hidden_message, "HIDDEN MESSAGE")
                 end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
             else:
