@@ -24,8 +24,7 @@ def color_cycling_mode():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             img.loadPixels()
-            imageMode(CENTER)
-            image(img, 821, 462)
+            image(img, 0, 0)
             waiting = booster.showWaitingDialog("Starting", "Please wait")            
             image_id = 0
             # for numbers from 0-7 (8 bits) called i
@@ -76,94 +75,92 @@ def LSB_random_insertion():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            imageMode(CENTER)
-            image(img, 821, 462)
-            loadPixels()
+            image(img, 0, 0)
+            img.loadPixels()
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             waiting = booster.showWaitingDialog("Starting", "Please wait")            
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             if (len(binary_string) > img.width * img.height * 3):  # when img too small for msg 
-                #print("ERROR: LARGER FILE SIZE NEEDED")
                 error = booster.showErrorDialog("The file selected is too small for this message!", "ERROR")
-
-            seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
-            # an int from 100 to 999
-            # inject random with that seed
-            random.seed(seed)
-            seed_string = str(seed) + "3ND" 
-            seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
-            newImage_iter = 0
-            newImage = createImage(img.width, img.height, RGB)
-            newImage.loadPixels()
-            i = 0
-            list_of_unavailable_pixels = []
-            for y in range(0, img.height):
-                for x in range(0, img.width): 
-                    colour = get(x,y)
-                    redC = int(red(colour))
-                    greenC = int(green(colour))
-                    blueC = int(blue(colour))
-                    redCInBinary = format(redC, '08b')
-                    greenCInBinary = format(greenC, '08b')
-                    blueCInBinary = format(blueC, '08b')
-                    for n in range(0,3):
-                        # print(i, "WHERE WE AT")
-                        if i < len(seed_binary):
-                            list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
-                            if n == 0:
-                                redCInBinary = LSB_insertion(redCInBinary, seed_binary[i])
-                                i += 1
-                            if n == 1:                                  
-                                greenCInBinary = LSB_insertion(greenCInBinary, seed_binary[i])
-                                i += 1
-                            if n == 2:                                  
-                                blueCInBinary = LSB_insertion(blueCInBinary, seed_binary[i])
-                                i += 1
-                    newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    newImage_iter += 1
-                newImage.updatePixels()
-            bit_iter = 0
-            xcor = 0
-            ycor = 0
-            while bit_iter < len(binary_string):
-                for i in range(0,2):
-                    rando = random.random()
-                    if i == 0: 
-                        xcor = floor(rando * img.width)
-                        i+=1
-                    else:
-                        ycor = floor(rando * img.height)
-                        i+=1
-                potential_coord = (xcor, ycor)
-                if potential_coord not in list_of_unavailable_pixels:
-                    colour = get(potential_coord[0],potential_coord[1])
-                    redC = int(red(colour))
-                    greenC = int(green(colour))
-                    blueC = int(blue(colour))
-                    redCInBinary = format(redC, '08b')
-                    greenCInBinary = format(greenC, '08b')
-                    blueCInBinary = format(blueC, '08b')
-                    for n in range(0,3):
-                        if bit_iter < len(binary_string):
-                            if n == 0:                                
-                                redCInBinary = LSB_insertion(redCInBinary, binary_string[bit_iter])
-                                bit_iter+=1
-                            if n == 1:                                  
-                                greenCInBinary = LSB_insertion(greenCInBinary, binary_string[bit_iter])
-                                bit_iter+=1
-                            if n == 2:                                  
-                                blueCInBinary = LSB_insertion(blueCInBinary, binary_string[bit_iter])
-                                bit_iter+=1
-                            list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
-                    new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    newImage.set(potential_coord[0], potential_coord[1], new_colour)                
-                newImage.updatePixels()
-                newImage.save("Encoded_Random_Image.PNG")
-            #print("DONE WITH RANDOMIZED LSB")
-            waiting.setMessage("Ready")
-            waiting.close() 
-            end = booster.showInfoDialog("Your message has successfully been randomly hidden in your image!")
+            else:
+                seed = random.randint(100, 999) # stores the randomly genearted number in to a seed variable
+                # an int from 100 to 999
+                # inject random with that seed
+                random.seed(seed)
+                seed_string = str(seed) + "3ND" 
+                seed_binary = ''.join(format(ord(x), '08b') for x in seed_string) # convert seed + 3ND into binary
+                newImage_iter = 0
+                newImage = createImage(img.width, img.height, RGB)
+                newImage.loadPixels()
+                i = 0
+                list_of_unavailable_pixels = []
+                for y in range(0, img.height):
+                    for x in range(0, img.width): 
+                        colour = get(x,y)
+                        redC = int(red(colour))
+                        greenC = int(green(colour))
+                        blueC = int(blue(colour))
+                        redCInBinary = format(redC, '08b')
+                        greenCInBinary = format(greenC, '08b')
+                        blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            # print(i, "WHERE WE AT")
+                            if i < len(seed_binary):
+                                list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
+                                if n == 0:
+                                    redCInBinary = LSB_insertion(redCInBinary, seed_binary[i])
+                                    i += 1
+                                if n == 1:                                  
+                                    greenCInBinary = LSB_insertion(greenCInBinary, seed_binary[i])
+                                    i += 1
+                                if n == 2:                                  
+                                    blueCInBinary = LSB_insertion(blueCInBinary, seed_binary[i])
+                                    i += 1
+                        newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                        newImage_iter += 1
+                    newImage.updatePixels()
+                bit_iter = 0
+                xcor = 0
+                ycor = 0
+                while bit_iter < len(binary_string):
+                    for i in range(0,2):
+                        rando = random.random()
+                        if i == 0: 
+                            xcor = floor(rando * img.width)
+                            i+=1
+                        else:
+                            ycor = floor(rando * img.height)
+                            i+=1
+                    potential_coord = (xcor, ycor)
+                    if potential_coord not in list_of_unavailable_pixels:
+                        colour = get(potential_coord[0],potential_coord[1])
+                        redC = int(red(colour))
+                        greenC = int(green(colour))
+                        blueC = int(blue(colour))
+                        redCInBinary = format(redC, '08b')
+                        greenCInBinary = format(greenC, '08b')
+                        blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            if bit_iter < len(binary_string):
+                                if n == 0:                                
+                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[bit_iter])
+                                    bit_iter+=1
+                                if n == 1:                                  
+                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[bit_iter])
+                                    bit_iter+=1
+                                if n == 2:                                  
+                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[bit_iter])
+                                    bit_iter+=1
+                                list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
+                        new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                        newImage.set(potential_coord[0], potential_coord[1], new_colour)                
+                    newImage.updatePixels()
+                    newImage.save("lsb_outputs/embedded_random_image.png")
+                waiting.setMessage("Ready")
+                waiting.close()
+                image(newImage, 0, 0)
+                end = booster.showInfoDialog("Your message has successfully been randomly hidden in your image!")
             
 
 def LSB_random_extraction():
@@ -173,9 +170,8 @@ def LSB_random_extraction():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            imageMode(CENTER)
-            image(img, 821, 462)
-            loadPixels()
+            image(img, 0, 0)
+            img.loadPixels()
             waiting = booster.showWaitingDialog("Starting", "Please wait")
             delimiter_found = False
             location_of_delimiter = 0
@@ -289,10 +285,8 @@ def LSB_random_extraction():
                 hidden_message = binascii.unhexlify('%x' % hidden_message_int)
                 waiting.setMessage("Ready")
                 waiting.close()                
-                #print(hidden_message, "HIDDEN MESSAGE")
                 end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
             else:
-                #print("NO SEED FOUND")
                 end = booster.showInfoDialog("No secret message was found!")
                   
 def LSB_extraction():
@@ -303,7 +297,7 @@ def LSB_extraction():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             image(img, 0, 0)
-            loadPixels()
+            img.loadPixels()
             waiting = booster.showWaitingDialog("Starting", "Please wait")
             delimiter_found = False
             location_of_delimiter = 0
@@ -370,7 +364,7 @@ def LSB_mode():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             image(img, 0, 0)
-            loadPixels()
+            img.loadPixels()
             message = booster.showTextInputDialog("What message do you want to hide?")
             message += "3ND" 
             binary_string = ''.join(format(ord(x), '08b') for x in message)
