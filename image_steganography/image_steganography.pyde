@@ -105,7 +105,6 @@ def LSB_random_insertion():
                         greenCInBinary = format(greenC, '08b')
                         blueCInBinary = format(blueC, '08b')
                         for n in range(0,3):
-                            # print(i, "WHERE WE AT")
                             if i < len(seed_binary):
                                 list_of_unavailable_pixels.append((x,y)) # IF WE EMBEDDING, PIXEL IS USED
                                 if n == 0:
@@ -155,8 +154,8 @@ def LSB_random_insertion():
                                 list_of_unavailable_pixels.append(potential_coord) # IF WE EMBEDDING, PIXEL IS USED
                         new_colour = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
                         newImage.set(potential_coord[0], potential_coord[1], new_colour)                
-                    newImage.updatePixels()
-                    newImage.save("lsb_outputs/embedded_random_image.png")
+                newImage.updatePixels()
+                newImage.save("lsb_outputs/embedded_random_image.png")
                 waiting.setMessage("Ready")
                 waiting.close()
                 image(newImage, 0, 0)
@@ -236,58 +235,60 @@ def LSB_random_extraction():
                 seed_convert = "0b" + secret_message
                 seed_int = int(seed_convert, 2)
                 seed_int = binascii.unhexlify('%x' % seed_int)
-                seed_int = int(seed_int)
-                delimiter_found = False
-                random.seed(seed_int) # inject random with seed 
-                potential_message = ""
-                while not delimiter_found:
-                    for i in range(0,2):
-                        rando = random.random()
-                        if i == 0: 
-                            xcor = floor(rando * img.width)
-                            i+=1
-                        else:
-                            ycor = floor(rando * img.height)
-                            i+=1
-                    potential_coord = (xcor, ycor)
-                    if potential_coord not in list_unavailable_pixels:
-                        print(potential_coord, "THIS IS THE COORD")
-                        colour = get(potential_coord[0],potential_coord[1])
-                        redC = int(red(colour))
-                        greenC = int(green(colour))
-                        blueC = int(blue(colour))
-                        redCInBinary = format(redC, '08b')
-                        greenCInBinary = format(greenC, '08b')
-                        blueCInBinary = format(blueC, '08b')
-                        for n in range(0,3):
-                            if n == 0:
-                                bit_extracted = redCInBinary[-1]
-                                potential_message += bit_extracted
-                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
-                                    delimiter_found = True
-                                    break
-                            if n == 1:
-                                bit_extracted = greenCInBinary[-1]
-                                potential_message += bit_extracted
-                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
-                                    delimiter_found = True
-                                    break
-                            if n == 2:
-                                bit_extracted = blueCInBinary[-1]
-                                potential_message += bit_extracted
-                                if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
-                                    delimiter_found = True
-                                    break
-                            list_unavailable_pixels.append(potential_coord)   
-                hidden_message_binary = potential_message[:-24]
-                hidden_message_binary = "0b" + hidden_message_binary
-                hidden_message_int = int(hidden_message_binary, 2)
-                hidden_message = binascii.unhexlify('%x' % hidden_message_int)
-                waiting.setMessage("Ready")
-                waiting.close()                
-                end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
+                if seed_int.isdigit():
+                    seed_int = int(seed_int)
+                    delimiter_found = False
+                    random.seed(seed_int) # inject random with seed 
+                    potential_message = ""
+                    while not delimiter_found:
+                        for i in range(0,2):
+                            rando = random.random()
+                            if i == 0: 
+                                xcor = floor(rando * img.width)
+                                i+=1
+                            else:
+                                ycor = floor(rando * img.height)
+                                i+=1
+                        potential_coord = (xcor, ycor)
+                        if potential_coord not in list_unavailable_pixels:
+                            colour = get(potential_coord[0],potential_coord[1])
+                            redC = int(red(colour))
+                            greenC = int(green(colour))
+                            blueC = int(blue(colour))
+                            redCInBinary = format(redC, '08b')
+                            greenCInBinary = format(greenC, '08b')
+                            blueCInBinary = format(blueC, '08b')
+                            for n in range(0,3):
+                                if n == 0:
+                                    bit_extracted = redCInBinary[-1]
+                                    potential_message += bit_extracted
+                                    if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                        delimiter_found = True
+                                        break
+                                if n == 1:
+                                    bit_extracted = greenCInBinary[-1]
+                                    potential_message += bit_extracted
+                                    if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                        delimiter_found = True
+                                        break
+                                if n == 2:
+                                    bit_extracted = blueCInBinary[-1]
+                                    potential_message += bit_extracted
+                                    if len(potential_message) >= 24 and potential_message[-24:] == '001100110100111001000100':
+                                        delimiter_found = True
+                                        break
+                                list_unavailable_pixels.append(potential_coord)   
+                    hidden_message_binary = potential_message[:-24]
+                    hidden_message_binary = "0b" + hidden_message_binary
+                    hidden_message_int = int(hidden_message_binary, 2)
+                    hidden_message = binascii.unhexlify('%x' % hidden_message_int)
+                    waiting.setMessage("Ready")
+                    waiting.close()                
+                    ends = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + '"')
+                else:
+                    ends = booster.showInfoDialog("No secret message was found.")
             else:
-                end = booster.showInfoDialog("No secret message was found!")
+                ends = booster.showInfoDialog("No secret message was found!")
                   
 def LSB_extraction():
     global booster
