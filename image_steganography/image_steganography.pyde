@@ -7,7 +7,7 @@ booster = UiBooster()
 def setup():
     size(1642, 924)
     background(color(37, 37, 38))
-    start = booster.showInfoDialog("Hello there! Welcome to our image steganography tool! Please read below to find the key commands: \n Key 'M' or 'm' for standard LSB insertion function \n Key 'R' or 'r' for randomized LSB insertion function \n Key 'L' or 'l' for standard LSB extraction function \n Key 'E' or 'e' for randomized LSB extraction function \n  Key 'C' or 'c' for color cycling tool function \n Please refer to our README for guidelines on usage. \n Have fun! ")
+    start = booster.showInfoDialog("Hello there! Welcome to our image steganography tool! Please read below to find the key commands: \n Key 'M' for standard LSB insertion function \n Key 'R' for randomized LSB insertion function \n Key 'L' for standard LSB extraction function \n Key 'E' for randomized LSB extraction function \n Key 'C' for color cycling tool function \n Please refer to our README for guidelines on usage. \n Have fun! ")
 
 def draw():
     color_cycling_mode()
