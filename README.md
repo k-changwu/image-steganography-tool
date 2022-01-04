@@ -78,4 +78,4 @@ Successfully finished devising and implementing randomized LSB extraction method
 - **Katherine** 🧊  
 Fixed uploading image error for regular LSB insertion. Added info, error, and waiting dialogs. 
 - **Rickey** 🌪️  
-Edited code to integrate all parts of project together. Cleaned code, removed debugging print statements, removed comments. Fixed other QOL bugs.
+Edited code to integrate all parts of project together. Cleaned code, removed debugging print statements, removed comments. Fixed other QOL bugs. Updated the readme with the brief project description. Created the Google Slides presentation. Designed the scavenger hunt challenge and playtested it.
