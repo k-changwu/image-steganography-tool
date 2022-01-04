@@ -376,43 +376,42 @@ def LSB_mode():
             image(img, 821, 462)
             loadPixels()
             message = booster.showTextInputDialog("What message do you want to hide?")
-            waiting = booster.showWaitingDialog("Starting", "Please wait")
             message += "3ND" 
             binary_string = ''.join(format(ord(x), '08b') for x in message)
             msg_len = len(binary_string)
             if (msg_len > img.width * img.height * 3):
-                #print("ERROR: LARGER FILE SIZE NEEDED")
-                error = booster.showErrorDialog("The file selected is too small for this message!")
-            i = 0
-            newImage_iter = 0
-            newImage = createImage(img.width, img.height, RGB)
-            newImage.loadPixels()
-            for y in range(0, img.height):
-                for x in range(0, img.width):
-                    colour = get(x,y)
-                    redC = int(red(colour))
-                    greenC = int(green(colour))
-                    blueC = int(blue(colour))
-                    redCInBinary = format(redC, '08b')
-                    greenCInBinary = format(greenC, '08b')
-                    blueCInBinary = format(blueC, '08b')
-                    for n in range(0,3):
-                        if i < len(binary_string):
-                            if n == 0:
-                                redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
-                                i += 1
-                            if n == 1:
-                                greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
-                                i += 1
-                            if n == 2:
-                                blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
-                                i += 1
-                    newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
-                    newImage_iter += 1
-            waiting.setMessage("Ready")
-            waiting.close()
-            newImage.updatePixels()
-            image(img, 821, 462)
-            #print("DONE WITH EMBEDDING")
-            newImage.save("Encoded_Image.PNG")
-            done = booster.showInfoDialog("Your message has been successfully hidden!")
+                error = booster.showErrorDialog("The file selected is too small for this message!", "ERROR")
+            else:
+                waiting = booster.showWaitingDialog("Starting", "Please wait")
+                i = 0
+                newImage_iter = 0
+                newImage = createImage(img.width, img.height, RGB)
+                newImage.loadPixels()
+                for y in range(0, img.height):
+                    for x in range(0, img.width):
+                        colour = get(x,y)
+                        redC = int(red(colour))
+                        greenC = int(green(colour))
+                        blueC = int(blue(colour))
+                        redCInBinary = format(redC, '08b')
+                        greenCInBinary = format(greenC, '08b')
+                        blueCInBinary = format(blueC, '08b')
+                        for n in range(0,3):
+                            if i < len(binary_string):
+                                if n == 0:
+                                    redCInBinary = LSB_insertion(redCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 1:
+                                    greenCInBinary = LSB_insertion(greenCInBinary, binary_string[i])
+                                    i += 1
+                                if n == 2:
+                                    blueCInBinary = LSB_insertion(blueCInBinary, binary_string[i])
+                                    i += 1
+                        newImage.pixels[newImage_iter] = color(int(redCInBinary, base = 2), int(greenCInBinary, base = 2), int(blueCInBinary, base = 2))
+                        newImage_iter += 1
+                waiting.setMessage("Ready")
+                waiting.close()
+                newImage.updatePixels()
+                image(img, 821, 462)
+                newImage.save("embedded_image.png")
+                done = booster.showInfoDialog("Your message has been successfully hidden!")
