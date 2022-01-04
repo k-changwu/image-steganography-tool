@@ -395,7 +395,6 @@ def LSB_extraction():
             imageMode(CENTER)
             image(img, 821, 462)
             loadPixels()
-            print("BEGIN EXTRACTING")
             delimiter_found = False
             location_of_delimiter = 0
             pixel_iter = 0
@@ -404,7 +403,7 @@ def LSB_extraction():
             current_potential_string = ""
             while pixel_iter < len(img.pixels) and not delimiter_found:
                 for n in range(0,3):
-                    while bit_iter_max < 24: #FIX THIS LATER
+                    while bit_iter_max < 24:
                         if n == 0:
                             current_red_color = format(int(red(img.pixels[pixel_iter])), '08b')
                             current_potential_string += current_red_color[-1]
@@ -416,7 +415,7 @@ def LSB_extraction():
                             current_potential_string += current_blue_color[-1]
                         bit_iter_max += 1
                         bit_iter += 1 # we have attempted by adding one channel now
-                    if current_potential_string == '001100110100111001000100': # FIX THIS LATER
+                    if current_potential_string == '001100110100111001000100':
                         delimiter_found = True
                     else:
                         current_potential_string = current_potential_string[1:]
@@ -426,9 +425,7 @@ def LSB_extraction():
                 pixel_iter += 1
             # assumes there is indeed a delimiter present
             if delimiter_found:
-                print(bit_iter, 'OLD')
                 bit_iter -= 47
-                print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
                 secret_message = ""
                 bit_count = 0
                 pixel_iter = 0
@@ -445,7 +442,6 @@ def LSB_extraction():
                                 secret_message += (format(int(blue(img.pixels[pixel_iter])), '08b'))[-1]
                                 bit_count += 1
                     pixel_iter += 1
-                print(secret_message, "IS THE HIDDEN MESSAGE!")
                 hidden_message_binary = secret_message
                 hidden_message_binary = "0b" + hidden_message_binary
                 hidden_message_int = int(hidden_message_binary, 2)
