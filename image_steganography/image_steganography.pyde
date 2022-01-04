@@ -67,19 +67,6 @@ def color_cycling_mode():
                     # if that bit value is 0, set that pixel in new image to white
                     # else, black
                 # save newImage
-            # path = os.path.abspath(os.getcwd())+"/color_cycling_variants/"
-            # # pngs = [os.path.join(path, file)
-            # #         for file in os.listdir(path)
-            # #         if file.endswith(".png")]
-            # for file in os.listdir(path):
-            #     print(file)
-            # # booster.showPictures(
-            # #     "Image Color Cycling Variations",
-            # #     pngs)
-            # pngs = [dataPath("/color_cycling_variants/image_variation_0.png")]
-            # booster.showPictures(
-            #         "IMG CCV",
-            #         pngs)
 
 def LSB_insertion(old_binary_color, bit_of_string):
     new_binary_color = old_binary_color[:-1] # everything up until last digit
@@ -94,7 +81,8 @@ def LSB_random_insertion():
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
             imageMode(CENTER)
-            image(img, 821, 462)            
+            image(img, 821, 462)
+            loadPixels()
             message = UiBooster().showTextInputDialog("What message do you want to hide?")
             message +=  "3ND"
             binary_string = ''.join(format(ord(x), '08b') for x in message)
