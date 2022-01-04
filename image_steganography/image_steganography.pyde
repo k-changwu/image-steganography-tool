@@ -302,8 +302,7 @@ def LSB_extraction():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            imageMode(CENTER)
-            image(img, 821, 462)
+            image(img, 0, 0)
             loadPixels()
             waiting = booster.showWaitingDialog("Starting", "Please wait")
             delimiter_found = False
@@ -360,10 +359,10 @@ def LSB_extraction():
                 waiting.setMessage("Ready")
                 waiting.close()
                 #print(hidden_message, "HIDDEN MESSAGE")
-                end = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + ' "')
+                ends = booster.showInfoDialog('The message has successfully been extracted from your image! Your secret message is "' + hidden_message + '"')
             else:
                 #print("NO HIDDEN MESSAGE FOUND")
-                end = booster.showInfoDialog("No secret message was found!")
+                ends = booster.showInfoDialog("No secret message was found!")
 
 def LSB_mode():
     global booster
@@ -372,8 +371,7 @@ def LSB_mode():
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
             img = loadImage(pathToImage)
-            imageMode(CENTER)
-            image(img, 821, 462)
+            image(img, 0, 0)
             loadPixels()
             message = booster.showTextInputDialog("What message do you want to hide?")
             message += "3ND" 
@@ -412,6 +410,6 @@ def LSB_mode():
                 waiting.setMessage("Ready")
                 waiting.close()
                 newImage.updatePixels()
-                image(img, 821, 462)
-                newImage.save("embedded_image.png")
+                image(newImage, 0, 0)
+                newImage.save("lsb_outputs/embedded_image.png")
                 done = booster.showInfoDialog("Your message has been successfully hidden!")
