@@ -2,7 +2,17 @@
 **Team:** The Stepanographers  
 **Members:** Katherine Chang and Rickey Dong  
 **Brief Project Description:**  
+
 We created our very own image steganography tool. It includes five features: least significant bit insertion and extraction, randomized least significant bit insertion and extraction, and color channels cycling. Upon launching the sketch, the user can press one of five keys to activate one of the above functions. They'll be prompted to upload an image they want to analyze or hide information in. After the image is uploaded, the tool does it works on the image, and then depending on the mode selected, it'll either display the hidden message it could find that was embedded with the tool or save images to the user's file system in a directory within the sketch folder.  
+
+**Instructions:**  
+
+1. Clone the repository
+2. Open the image_steganography.pyde file in Processing
+3. Download the UiBooster library
+4. Install the Python extension for Processing
+5. Click the run button in the upper-left hand corner of Processing
+
 ## 📃 Development Log
 ### Dec 14, 2021 (Tuesday)
 - **Katherine** 🧊  
