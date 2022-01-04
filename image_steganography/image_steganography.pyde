@@ -11,14 +11,14 @@ def setup():
 
 def draw():
     color_cycling_mode()
-    #LSB_mode()
-    #LSB_extraction()
-    #LSB_random_insertion()
-    #LSB_random_extraction()
+    LSB_mode()
+    LSB_extraction()
+    LSB_random_insertion()
+    LSB_random_extraction()
 
 def color_cycling_mode():
     global booster
-    if keyPressed == True:
+    if keyPressed and (key == 'C' or key == 'c'):
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
@@ -87,7 +87,7 @@ def LSB_insertion(old_binary_color, bit_of_string):
 
 def LSB_random_insertion():
     global booster
-    if keyPressed == True:
+    if keyPressed and (key == 'R' or key == 'r'):
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
@@ -226,7 +226,7 @@ def LSB_random_insertion():
 
 def LSB_random_extraction():
     global booster
-    if keyPressed == True:
+    if keyPressed and (key == 'E' or key == 'e'):
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
@@ -385,7 +385,7 @@ def LSB_random_extraction():
                   
 def LSB_extraction():
     global booster
-    if keyPressed == True:
+    if keyPressed and (key == 'L' or key == 'l'):
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
@@ -454,7 +454,7 @@ def LSB_extraction():
 
 def LSB_mode():
     global booster
-    if keyPressed == True:
+    if keyPressed and (key == 'M' or key == 'm'):
         selected_image_file = booster.showFileSelection()
         if selected_image_file != None:
             pathToImage = selected_image_file.getAbsolutePath()
