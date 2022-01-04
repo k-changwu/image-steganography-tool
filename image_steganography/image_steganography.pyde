@@ -235,7 +235,6 @@ def LSB_random_extraction():
             imageMode(CENTER)
             image(img, 821, 462)
             loadPixels()
-            print("BEGIN EXTRACTING")
             delimiter_found = False
             location_of_delimiter = 0
             pixel_iter = 0
@@ -244,7 +243,7 @@ def LSB_random_extraction():
             current_potential_string = ""
             while pixel_iter < len(img.pixels) and not delimiter_found:
                 for n in range(0,3):
-                    while bit_iter_max < 24: #FIX THIS LATER
+                    while bit_iter_max < 24:
                         if n == 0:
                             current_red_color = format(int(red(img.pixels[pixel_iter])), '08b')
                             current_potential_string += current_red_color[-1]
@@ -256,7 +255,7 @@ def LSB_random_extraction():
                             current_potential_string += current_blue_color[-1]
                         bit_iter_max += 1
                         bit_iter += 1 # we have attempted by adding one channel now
-                    if current_potential_string == '001100110100111001000100': # FIX THIS LATER
+                    if current_potential_string == '001100110100111001000100':
                         delimiter_found = True
                     else:
                         current_potential_string = current_potential_string[1:]
@@ -266,9 +265,7 @@ def LSB_random_extraction():
                 pixel_iter += 1
             # assumes there is indeed a delimiter present
             if delimiter_found:
-                print(bit_iter, 'OLD')
                 bit_iter -= 47
-                print(bit_iter, 'NEW') # bit_iter is now the location of where delimiter is
                 secret_message = ""
                 bit_count = 0
                 pixel_iter = 0
@@ -298,12 +295,10 @@ def LSB_random_extraction():
                         pix_count += 1
                         x += 1
                     y += 1
-                # print(list_unavailable_pixels)
                 seed_convert = "0b" + secret_message
                 seed_int = int(seed_convert, 2)
                 seed_int = binascii.unhexlify('%x' % seed_int)
                 seed_int = int(seed_int)
-                #print(seed_int, "SEED AS AN INT??")
                 delimiter_found = False
                 random.seed(seed_int) # inject random with seed 
                 potential_message = ""
@@ -353,37 +348,6 @@ def LSB_random_extraction():
                 print(hidden_message, "HIDDEN MESSAGE")
             else:
                 print("NO SEED FOUND")
-   
-               
-            # PSEUDOCODE
-            # extract seed from top left stopping when 3ND is found calling LSB_extraction method 
-            # add top left pixels seed was extracted from to LOPTAU
-              # divide length of seed binary by 3 but ceiling it (rounding up)
-              # now we have how many pixels the seed was inserted in
-              # do mathgick with (y*width)+x to get individual coordinates to add to LOPTAU
-              # pix_count to count number of pixels we adding 
-              # while pix_count < 
-              # WHILE Y < IMG>HEIGHT AND while pix_count < num_of_pixels_that_were_affected_with_seed3ND
-                  # WHILE x < IMG.WIDTH AND while pix_count < num_of_pixels_that_were_affected_with_seed3ND
-                    # add (x,y) to LOPTAU
-                    # pix_count += 1
-                 # X+=1
-             # Y+=1
-            # convert seed binary to ASCII to int
-            # then use seed to generate coordinates and extract LSB from those pixels
-            # LOOP while delimiter not found
-              # generate random coord 
-              # do mathgick to get coordinates
-              # check if in LOPTAU
-                # if not in LOPTAU, 
-                   # extract 1/2/3 bits from that pixel & store into string
-                   # let's say 3ND in binary is x chars long
-                   # after extracting a bit from that pixel, attempt to see if string's last x chars equal to 3ND in binary
-                   # if true, then 3ND is found, break from loop
-                   # else keep extracting more bits
-                   # add to LOPTAU
-            # once the LOOP ends, that means all of message + 3ND is found 
-            
                   
 def LSB_extraction():
     global booster
@@ -449,7 +413,6 @@ def LSB_extraction():
                 print(hidden_message, "HIDDEN MESSAGE")
             else:
                 print("NO HIDDEN MESSAGE FOUND")
-                
 
 def LSB_mode():
     global booster
